@@ -34,7 +34,13 @@ class HomeScreenComponent extends ConsumerWidget {
 
             // click each priority to show its details
             SizedBox(height: 30),
-            TaskWidget(),
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => TaskWidget(priority: "High"),
+                itemCount: 3,
+                separatorBuilder: (context, index) => SizedBox(height: 20),
+              ),
+            ),
           ],
         ),
       ),

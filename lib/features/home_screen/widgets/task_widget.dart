@@ -6,7 +6,8 @@ import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
 class TaskWidget extends ConsumerWidget {
-  const TaskWidget({super.key});
+  final String? priority;
+  const TaskWidget({super.key, this.priority = "Low"});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,11 +44,26 @@ class TaskWidget extends ConsumerWidget {
                   ),
                 ],
               ),
-              Icon(Icons.priority_high_rounded, color: color.deleteColor),
+              Icon(
+                Icons.priority_high_rounded,
+                color: getPriorityColor(priority!, ref),
+              ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  Color getPriorityColor(String priority, WidgetRef ref) {
+    final color = ref.watch(themeProvider);
+
+    final String priorityColor = priority.toLowerCase();
+
+    return priorityColor == "high"
+        ? color.deleteColor
+        : priorityColor == "medium"
+        ? color.warningColor
+        : color.iconColor;
   }
 }

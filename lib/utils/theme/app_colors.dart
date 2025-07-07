@@ -15,6 +15,7 @@ abstract class Appcolor {
   final Color successColor;
   final Color errorColor;
   final Color deleteColor;
+  final Color warningColor;
   final Color teritiaryColor;
   final Color iconColor;
 
@@ -29,6 +30,7 @@ abstract class Appcolor {
     required this.successColor,
     required this.errorColor,
     required this.deleteColor,
+    required this.warningColor,
     required this.teritiaryColor,
     required this.iconColor,
   });
@@ -48,6 +50,7 @@ class AppDefaultColor extends Appcolor {
         successColor: Colors.green.shade900,
         errorColor: Colors.red,
         deleteColor: const Color.fromARGB(255, 152, 23, 14),
+        warningColor: Colors.amber,
         iconColor: Colors.white,
       );
 }
@@ -66,6 +69,7 @@ class AppDarkColor extends Appcolor {
         successColor: Colors.green.shade900,
         errorColor: Colors.red,
         deleteColor: const Color.fromARGB(255, 152, 23, 14),
+        warningColor: Colors.amber,
         iconColor: Colors.white,
       );
 }
@@ -84,6 +88,7 @@ class AppLightColor extends Appcolor {
         successColor: Colors.green,
         errorColor: Colors.red,
         deleteColor: const Color.fromARGB(255, 152, 23, 14),
+        warningColor: Colors.amber,
         iconColor: Colors.black,
       );
 }
