@@ -32,4 +32,12 @@ class Fontstyles {
       color: color.iconColor,
     );
   }
+
+  // Calendar Fontstyles
+
+  // Holiday or Weekend
+  static TextStyle holidayTextstyle(BuildContext context, WidgetRef ref) {
+    final color = ref.watch(themeProvider);
+    return TextStyle(color: color.errorColor);
+  }
 }
