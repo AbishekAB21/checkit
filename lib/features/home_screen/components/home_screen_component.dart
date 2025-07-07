@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:checkit/features/home_screen/widgets/task_widget.dart';
 import 'package:checkit/features/home_screen/widgets/table_calendar.dart';
 import 'package:checkit/features/home_screen/widgets/welcome_section.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
@@ -32,9 +33,8 @@ class HomeScreenComponent extends ConsumerWidget {
             priorities red:high, yellow:medium white:low) */
 
             // click each priority to show its details
-
-            Container()
-
+            SizedBox(height: 30),
+            TaskWidget(),
           ],
         ),
       ),

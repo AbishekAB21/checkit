@@ -20,7 +20,7 @@ class Fontstyles {
     return GoogleFonts.roboto(
       fontSize: 15,
       fontWeight: FontWeight.w500,
-      color: color.hintTextColor,
+      color: color.iconColor,
     );
   }
 
@@ -29,6 +29,24 @@ class Fontstyles {
     return GoogleFonts.roboto(
       fontSize: 18,
       fontWeight: FontWeight.w500,
+      color: color.iconColor,
+    );
+  }
+
+  static TextStyle roboto16pxLight(BuildContext context, WidgetRef ref) {
+    final color = ref.watch(themeProvider);
+    return GoogleFonts.roboto(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: color.iconColor,
+    );
+  }
+
+  static TextStyle roboto10px(BuildContext context, WidgetRef ref) {
+    final color = ref.watch(themeProvider);
+    return GoogleFonts.roboto(
+      fontSize: 10,
+      fontWeight: FontWeight.w700,
       color: color.iconColor,
     );
   }
