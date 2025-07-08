@@ -51,6 +51,15 @@ class Fontstyles {
     );
   }
 
+  static TextStyle roboto15Hintpx(BuildContext context, WidgetRef ref) {
+    final color = ref.watch(themeProvider);
+    return GoogleFonts.roboto(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: color.hintTextColor,
+    );
+  }
+
   // Calendar Fontstyles
 
   // Holiday or Weekend
