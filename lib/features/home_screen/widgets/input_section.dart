@@ -4,13 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
+import 'package:checkit/common/widgets/segmented_button_widget.dart';
 
-class InputSection extends StatelessWidget {
+class InputSection extends ConsumerWidget {
   final WidgetRef ref;
-  const InputSection({super.key, required this.ref});
+  InputSection({super.key, required this.ref});
+
+  final List<String> priorities = ['Low', 'Medium', 'High'];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,7 +35,7 @@ class InputSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Date", style: Fontstyles.roboto15px(context, ref)),
-                  ReusableTextfield(ref: ref, hinttext: "Task description"),
+                  ReusableTextfield(ref: ref, hinttext: "Date"),
                 ],
               ),
             ),
@@ -42,12 +45,19 @@ class InputSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Time", style: Fontstyles.roboto15px(context, ref)),
-                  ReusableTextfield(ref: ref, hinttext: "Task description"),
+                  ReusableTextfield(ref: ref, hinttext: "Time"),
                 ],
               ),
             ),
           ],
         ),
+
+        SizedBox(height: 16),
+
+        Text("Priority", style: Fontstyles.roboto15px(context, ref)),
+
+        // Segmented buttons section
+        Center(child: SegmentedButtonWidget(buttons: priorities)),
       ],
     );
   }

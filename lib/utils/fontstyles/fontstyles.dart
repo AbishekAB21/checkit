@@ -24,6 +24,13 @@ class Fontstyles {
     );
   }
 
+  static TextStyle roboto15pxNoColor(BuildContext context, WidgetRef ref) {
+    return GoogleFonts.roboto(
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
   static TextStyle roboto18px(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
     return GoogleFonts.roboto(
