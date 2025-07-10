@@ -1,3 +1,4 @@
+import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,18 +13,36 @@ class InputSection extends ConsumerWidget {
 
   final List<String> priorities = ['Low', 'Medium', 'High'];
 
+  final TextEditingController taskNameController = TextEditingController();
+  final TextEditingController taskDescController = TextEditingController();
+  final TextEditingController taskDateController = TextEditingController();
+  final TextEditingController taskTimeController = TextEditingController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Title", style: Fontstyles.roboto15px(context, ref)),
-        ReusableTextfield(ref: ref, hinttext: "Task name"),
+        ReusableTextfield(
+          controller: taskNameController,
+          ref: ref,
+          hinttext: "Task name",
+          suffixIcon: null,
+          readOnly: false,
+        ),
 
         SizedBox(height: 16),
 
         Text("Description", style: Fontstyles.roboto15px(context, ref)),
-        ReusableTextfield(ref: ref, maxlines: 5, hinttext: "Task description"),
+        ReusableTextfield(
+          controller: taskDescController,
+          ref: ref,
+          maxlines: 5,
+          hinttext: "Task description",
+          suffixIcon: null,
+          readOnly: false,
+        ),
 
         SizedBox(height: 16),
 
@@ -35,7 +54,19 @@ class InputSection extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Date", style: Fontstyles.roboto15px(context, ref)),
-                  ReusableTextfield(ref: ref, hinttext: "Date"),
+                  ReusableTextfield(
+                    controller: taskDateController,
+                    ref: ref,
+                    hinttext: "Date",
+                    suffixIcon: Icon(Icons.calendar_month_rounded),
+                    readOnly: true,
+                    onTap:
+                        () => DateTimePicker.pickDate(
+                          context: context,
+                          controller: taskDateController,
+                          ref: ref,
+                        ),
+                  ),
                 ],
               ),
             ),
@@ -45,7 +76,19 @@ class InputSection extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Time", style: Fontstyles.roboto15px(context, ref)),
-                  ReusableTextfield(ref: ref, hinttext: "Time"),
+                  ReusableTextfield(
+                    controller: taskTimeController,
+                    ref: ref,
+                    hinttext: "Time",
+                    suffixIcon: Icon(Icons.alarm),
+                    readOnly: true,
+                    onTap:
+                        () => DateTimePicker.pickTime(
+                          context: context,
+                          controller: taskTimeController,
+                          ref: ref,
+                        ),
+                  ),
                 ],
               ),
             ),

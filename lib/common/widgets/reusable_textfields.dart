@@ -9,11 +9,19 @@ class ReusableTextfield extends StatelessWidget {
   final WidgetRef ref;
   final int? maxlines;
   final String hinttext;
+  final Widget? suffixIcon;
+  final void Function()? onTap;
+  final bool readOnly;
+  final TextEditingController controller;
   const ReusableTextfield({
     super.key,
     required this.ref,
     this.maxlines = 1,
+    this.suffixIcon,
     required this.hinttext,
+    this.onTap,
+    required this.readOnly,
+    required this.controller,
   });
 
   @override
@@ -25,11 +33,17 @@ class ReusableTextfield extends StatelessWidget {
         //borderRadius: BorderRadius.circular(35),
       ),
       child: TextFormField(
+        controller: controller,
         maxLines: maxlines,
+        readOnly: readOnly,
         cursorColor: color.iconColor,
         cursorHeight: 15,
         style: Fontstyles.roboto15px(context, ref),
         decoration: InputDecoration(
+          suffixIcon:
+              suffixIcon != null
+                  ? IconButton(onPressed: onTap, icon: suffixIcon!)
+                  : null,
           isDense: true,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
