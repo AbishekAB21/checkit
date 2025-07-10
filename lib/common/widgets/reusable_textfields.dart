@@ -42,7 +42,11 @@ class ReusableTextfield extends StatelessWidget {
         decoration: InputDecoration(
           suffixIcon:
               suffixIcon != null
-                  ? IconButton(onPressed: onTap, icon: suffixIcon!)
+                  ? IconButton(
+                    enableFeedback: true,
+                    onPressed: onTap,
+                    icon: suffixIcon!,
+                  )
                   : null,
           isDense: true,
           border: OutlineInputBorder(
