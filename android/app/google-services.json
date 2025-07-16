@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "145242219808",
+    "project_id": "checkit-bc3f4",
+    "storage_bucket": "checkit-bc3f4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145242219808:android:0fa56c4e8797c1ae19e345",
+        "android_client_info": {
+          "package_name": "com.abishek.checkit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeLhenmlkgfsWUIp2UKu2goP1uHD_6TSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

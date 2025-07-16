@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/features/splash/container/splash_screen_container.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(ProviderScope(child: const MyApp()));
 }
 

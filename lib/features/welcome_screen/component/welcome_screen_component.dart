@@ -1,12 +1,14 @@
-import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
-import 'package:checkit/common/widgets/logo.dart';
-import 'package:checkit/common/widgets/reusable_button.dart';
-import 'package:checkit/features/login_screen/container/log_in_screen_container.dart';
-import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
-import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:checkit/common/widgets/logo.dart';
+import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/common/widgets/reusable_button.dart';
+import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
+import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/login_screen/container/log_in_screen_container.dart';
 
 class WelcomeScreenComponent extends ConsumerWidget {
   const WelcomeScreenComponent({super.key});
@@ -34,7 +36,11 @@ class WelcomeScreenComponent extends ConsumerWidget {
               ),
 
               // TODO: Replace with lottie animation and match the size.
-              Spacer(),
+
+              LottieBuilder.asset("assets/animations/ceD1ZS54hb.json",
+              height: 500,
+              ),
+              
               Text(
                 "Welcome to CheckIt!",
                 style: Fontstyles.roboto25px(context, ref),
