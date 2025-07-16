@@ -16,6 +16,7 @@ class PhoneNumberSection extends ConsumerWidget {
     return IntlPhoneField(
       style: Fontstyles.roboto15px(context, ref),
       keyboardType: TextInputType.number,
+      initialCountryCode: "IN",
       // Textfield
       decoration: InputDecoration(
         isDense: true,

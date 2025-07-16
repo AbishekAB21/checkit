@@ -6,6 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
 class Fontstyles {
+  static TextStyle roboto35px(BuildContext context, WidgetRef ref) {
+    final color = ref.watch(themeProvider);
+    return GoogleFonts.roboto(
+      fontSize: 35,
+      fontWeight: FontWeight.w900,
+      color: color.iconColor,
+    );
+  }
+
   static TextStyle roboto25px(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
     return GoogleFonts.roboto(

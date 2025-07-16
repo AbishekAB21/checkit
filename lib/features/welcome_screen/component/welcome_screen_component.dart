@@ -19,46 +19,49 @@ class WelcomeScreenComponent extends ConsumerWidget {
       backgroundColor: color.background,
 
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Logo(height: 40, width: 40, iconSize: 20),
-                SizedBox(width: 5.0),
-                Text("CheckIt", style: Fontstyles.roboto22px(context, ref)),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Logo(height: 40, width: 40, iconSize: 20),
+                  SizedBox(width: 5.0),
+                  Text("CheckIt", style: Fontstyles.roboto22px(context, ref)),
+                ],
+              ),
 
-            // TODO: Replace with lottie animation and match the size.
-            Spacer(),
-            Text(
-              "Welcome to CheckIt!",
-              style: Fontstyles.roboto25px(context, ref),
-            ),
-            Text(
-              "Plan it. Prioritize it. CheckIt.",
-              style: Fontstyles.roboto16pxLight(context, ref),
-            ),
-            SizedBox(height: 30),
+              // TODO: Replace with lottie animation and match the size.
+              Spacer(),
+              Text(
+                "Welcome to CheckIt!",
+                style: Fontstyles.roboto25px(context, ref),
+              ),
+              Text(
+                "Plan it. Prioritize it. CheckIt.",
+                style: Fontstyles.roboto16pxLight(context, ref),
+              ),
+              SizedBox(height: 30),
 
-            ReusableButton(
-              buttonText: "Log In",
-              onpressed: () {
-                Navigator.of(
-                  context,
-                ).push(CustomFadeTransition(route: LogInScreenContainer()));
-              },
-            ),
+              ReusableButton(
+                buttonText: "Log In",
+                onpressed: () {
+                  Navigator.of(context).pushReplacement(
+                    CustomFadeTransition(route: LogInScreenContainer()),
+                  );
+                },
+              ),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            Text(
-              "New around here? Sign Up",
-              style: Fontstyles.roboto15px(context, ref),
-            ),
-          ],
+              Text(
+                "New around here? Sign Up",
+                style: Fontstyles.roboto15px(context, ref),
+              ),
+            ],
+          ),
         ),
       ),
     );

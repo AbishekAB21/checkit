@@ -10,6 +10,8 @@ class ReusableTextfield extends StatelessWidget {
   final int? maxlines;
   final String hinttext;
   final Widget? suffixIcon;
+  final Color? filledColor;
+  final bool? showBorder;
   final void Function()? onTap;
   final bool readOnly;
   final TextEditingController controller;
@@ -19,6 +21,8 @@ class ReusableTextfield extends StatelessWidget {
     this.maxlines = 1,
     this.suffixIcon,
     required this.hinttext,
+    this.filledColor,
+    this.showBorder = false,
     this.onTap,
     required this.readOnly,
     required this.controller,
@@ -50,11 +54,18 @@ class ReusableTextfield extends StatelessWidget {
                   : null,
           isDense: true,
           border: OutlineInputBorder(
-            borderSide: BorderSide.none,
+            borderSide:
+                !showBorder!
+                    ? BorderSide.none
+                    : BorderSide(color: color.textfieldBackground),
             borderRadius: BorderRadius.circular(10),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: color.iconColor),
+          ),
           filled: true,
-          fillColor: color.textfieldBackground2,
+          fillColor: filledColor ?? color.textfieldBackground2,
           hintText: hinttext,
           hintStyle: Fontstyles.roboto15Hintpx(context, ref),
         ),
