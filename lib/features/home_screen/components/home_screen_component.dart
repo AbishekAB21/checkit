@@ -1,3 +1,5 @@
+import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
+import 'package:checkit/features/task_detail_screen/containers/task_detail_screen_container.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,7 +39,18 @@ class HomeScreenComponent extends ConsumerWidget {
             SizedBox(height: 30),
             Expanded(
               child: ListView.separated(
-                itemBuilder: (context, index) => TaskWidget(priority: "High"),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        CustomFadeTransition(
+                          route: TaskDetailScreenContainer(),
+                        ),
+                      );
+                    },
+                    child: TaskWidget(priority: "High"),
+                  );
+                },
                 itemCount: 3,
                 separatorBuilder: (context, index) => SizedBox(height: 20),
               ),
