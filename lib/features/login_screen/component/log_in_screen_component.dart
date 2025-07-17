@@ -9,8 +9,8 @@ import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/login_screen/widgets/phone_number_section.dart';
-import 'package:checkit/features/home_screen/containers/home_screen_container.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/otp_verification_screen/containers/otp_verfication_container.dart';
 
 class LogInScreenComponent extends ConsumerWidget {
   LogInScreenComponent({super.key});
@@ -82,7 +82,7 @@ class LogInScreenComponent extends ConsumerWidget {
                 buttonText: "Log In",
                 onpressed: () {
                   Navigator.of(context).pushReplacement(
-                    CustomFadeTransition(route: HomeScreenContainer()),
+                    CustomFadeTransition(route: OtpVerficationContainer()),
                   );
                 },
               ),
