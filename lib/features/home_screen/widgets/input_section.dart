@@ -1,25 +1,48 @@
-import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/widgets/segmented_button_widget.dart';
 
-class InputSection extends ConsumerWidget {
+class InputSection extends ConsumerStatefulWidget {
   final WidgetRef ref;
-  InputSection({super.key, required this.ref});
-
-  final List<String> priorities = ['Low', 'Medium', 'High'];
-
-  final TextEditingController taskNameController = TextEditingController();
-  final TextEditingController taskDescController = TextEditingController();
-  final TextEditingController taskDateController = TextEditingController();
-  final TextEditingController taskTimeController = TextEditingController();
+  const InputSection({super.key, required this.ref});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<InputSection> createState() => _InputSectionState();
+}
+
+class _InputSectionState extends ConsumerState<InputSection> {
+  final List<String> priorities = ['Low', 'Medium', 'High'];
+
+  late final TextEditingController taskNameController;
+  late final TextEditingController taskDescController;
+  late final TextEditingController taskDateController;
+  late final TextEditingController taskTimeController;
+
+  @override
+  void initState() {
+    super.initState();
+    taskNameController = TextEditingController();
+    taskDescController = TextEditingController();
+    taskDateController = TextEditingController();
+    taskTimeController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    taskNameController.dispose();
+    taskDescController.dispose();
+    taskDateController.dispose();
+    taskTimeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

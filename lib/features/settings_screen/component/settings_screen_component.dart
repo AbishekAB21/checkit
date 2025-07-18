@@ -29,6 +29,23 @@ class SettingsScreenComponent extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(
+                  "Completed Tasks",
+                  style: Fontstyles.roboto18px(context, ref),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: color.iconColor,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Text("Dark Mode", style: Fontstyles.roboto18px(context, ref)),
                 CupertinoSwitch(
                   value: ref.watch(themeModeProvider) == ThemeMode.dark,
