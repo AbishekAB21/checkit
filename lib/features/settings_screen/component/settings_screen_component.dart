@@ -1,3 +1,5 @@
+import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
+import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -34,7 +36,13 @@ class SettingsScreenComponent extends ConsumerWidget {
                   style: Fontstyles.roboto18px(context, ref),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      CustomFadeTransition(
+                        route: CompletedTaskScreenContainer(),
+                      ),
+                    );
+                  },
                   icon: Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: color.iconColor,
