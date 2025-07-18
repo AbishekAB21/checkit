@@ -1,6 +1,3 @@
-import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
-import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
-import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,7 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/theme/app_colors.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
+import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
 
 class SettingsScreenComponent extends ConsumerWidget {
   const SettingsScreenComponent({super.key});
@@ -29,6 +29,53 @@ class SettingsScreenComponent extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Profile section
+            Center(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: color.secondaryGradient1,
+                  borderRadius: BorderRadius.circular(60),
+                ),
+
+                // TODO : Wrap with Inkwell or Gesturedetector to allow changing profile pic
+                child: CircleAvatar(
+                  backgroundColor: color.secondaryGradient1,
+                  backgroundImage: AssetImage("assets/images/cast_test.jpeg"),
+                  radius: 50,
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Center(
+              child: Text(
+                "Abishek",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Fontstyles.roboto22px(context, ref),
+              ),
+            ),
+            SizedBox(height: 40),
+
+            // Theme
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppConstants.darkMode,
+                  style: Fontstyles.roboto18px(context, ref),
+                ),
+                CupertinoSwitch(
+                  value: ref.watch(themeModeProvider) == ThemeMode.dark,
+                  onChanged: (_) {
+                    ref.read(themeModeProvider.notifier).toggleTheme();
+                  },
+                  activeTrackColor: appcolor.secondaryGradient1,
+                ),
+              ],
+            ),
+
+            // Account details or settings
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -51,22 +98,14 @@ class SettingsScreenComponent extends ConsumerWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppConstants.darkMode,
-                  style: Fontstyles.roboto18px(context, ref),
-                ),
-                CupertinoSwitch(
-                  value: ref.watch(themeModeProvider) == ThemeMode.dark,
-                  onChanged: (_) {
-                    ref.read(themeModeProvider.notifier).toggleTheme();
-                  },
-                  activeTrackColor: appcolor.secondaryGradient1,
-                ),
-              ],
+
+            Spacer(),
+
+            Center(
+              child: Text(
+                "Version 1.0",
+                style: Fontstyles.roboto15Hintpx(context, ref),
+              ),
             ),
           ],
         ),
