@@ -1,3 +1,4 @@
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,10 +49,10 @@ class AddNewTaskPopup {
                               ),
                             ),
                             onPressed: () => Navigator.pop(context),
-                            child: Text("Cancel"),
+                            child: Text(AppConstants.cancel),
                           ),
                           Text(
-                            "New Task",
+                            AppConstants.newTask,
                             style: Fontstyles.roboto18px(context, ref),
                           ),
                           TextButton(
@@ -61,7 +62,7 @@ class AddNewTaskPopup {
                               ),
                             ),
                             onPressed: () {},
-                            child: Text("Done"),
+                            child: Text(AppConstants.done),
                           ),
                         ],
                       ),

@@ -1,10 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
+import 'package:lottie/lottie.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/common/widgets/logo.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
@@ -32,28 +34,30 @@ class WelcomeScreenComponent extends ConsumerWidget {
                   children: [
                     Logo(height: 40, width: 40, iconSize: 20),
                     SizedBox(width: 5.0),
-                    Text("CheckIt", style: Fontstyles.roboto22px(context, ref)),
+                    Text(
+                      AppConstants.appName,
+                      style: Fontstyles.roboto22px(context, ref),
+                    ),
                   ],
                 ),
 
-                
                 LottieBuilder.asset(
                   "assets/animations/ceD1ZS54hb.json",
                   height: 490,
                 ),
 
                 Text(
-                  "Welcome to CheckIt!",
+                  AppConstants.welcomeToCheckIt,
                   style: Fontstyles.roboto25px(context, ref),
                 ),
                 Text(
-                  "Plan it. Prioritize it. CheckIt.",
+                  AppConstants.planPrioritizeCheck,
                   style: Fontstyles.roboto16pxLight(context, ref),
                 ),
                 SizedBox(height: 30),
 
                 ReusableButton(
-                  buttonText: "Log In",
+                  buttonText: AppConstants.logIn,
                   onpressed: () {
                     Navigator.of(context).pushReplacement(
                       CustomFadeTransition(route: LogInScreenContainer()),
@@ -63,9 +67,22 @@ class WelcomeScreenComponent extends ConsumerWidget {
 
                 SizedBox(height: 20),
 
-                Text(
-                  "New around here? Sign Up",
-                  style: Fontstyles.roboto15px(context, ref),
+                RichText(
+                  text: TextSpan(
+                    text: AppConstants.newAroundHere,
+                    style: Fontstyles.roboto16pxLight(context, ref),
+                    children: [
+                      TextSpan(
+                        text: AppConstants.signUp,
+                        style: Fontstyles.roboto16pxSemiBold(context, ref),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () {
+                                //  SignUp navigation or logic
+                              },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

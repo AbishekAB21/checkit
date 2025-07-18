@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:checkit/utils/theme/app_colors.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/container/settings_screen_container.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WelcomeTextSection extends ConsumerWidget {
   final String name;
@@ -15,7 +17,7 @@ class WelcomeTextSection extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("Hi, $name", style: Fontstyles.roboto25px(context, ref)),
+        Text("${AppConstants.hi}, $name", style: Fontstyles.roboto25px(context, ref)),
 
         GestureDetector(
           onTap: () {

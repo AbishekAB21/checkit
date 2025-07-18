@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/home_screen/containers/home_screen_container.dart';
@@ -24,7 +25,7 @@ class OtpVerificationComponent extends ConsumerWidget {
           backgroundColor: color.background,
           toolbarHeight: 30,
           title: Text(
-            "Enter Verification Code",
+            AppConstants.enterVerificationCode,
             style: Fontstyles.roboto15px(context, ref),
           ),
         ),
@@ -36,7 +37,7 @@ class OtpVerificationComponent extends ConsumerWidget {
             children: [
               SizedBox(height: 10),
               Text(
-                "We have sent an OTP (One-Time Password) to your phone number.",
+                AppConstants.weHaveSentOTP,
                 style: Fontstyles.roboto13px(context, ref),
                 textAlign: TextAlign.center,
               ),
@@ -57,7 +58,7 @@ class OtpVerificationComponent extends ConsumerWidget {
               Spacer(),
 
               ReusableButton(
-                buttonText: "Confirm",
+                buttonText: AppConstants.confirm,
                 onpressed: () {
                   Navigator.of(context).pushReplacement(
                     CustomFadeTransition(route: HomeScreenContainer()),

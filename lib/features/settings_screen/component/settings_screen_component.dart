@@ -1,5 +1,6 @@
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -32,7 +33,7 @@ class SettingsScreenComponent extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Completed Tasks",
+                  AppConstants.completedTasks,
                   style: Fontstyles.roboto18px(context, ref),
                 ),
                 IconButton(
@@ -54,7 +55,10 @@ class SettingsScreenComponent extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Dark Mode", style: Fontstyles.roboto18px(context, ref)),
+                Text(
+                  AppConstants.darkMode,
+                  style: Fontstyles.roboto18px(context, ref),
+                ),
                 CupertinoSwitch(
                   value: ref.watch(themeModeProvider) == ThemeMode.dark,
                   onChanged: (_) {

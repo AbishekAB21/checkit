@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/widgets/segmented_button_widget.dart';
@@ -46,23 +47,26 @@ class _InputSectionState extends ConsumerState<InputSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Title", style: Fontstyles.roboto15px(context, ref)),
+        Text(AppConstants.title, style: Fontstyles.roboto15px(context, ref)),
         ReusableTextfield(
           controller: taskNameController,
           ref: ref,
-          hinttext: "Task name",
+          hinttext: AppConstants.taskName,
           suffixIcon: null,
           readOnly: false,
         ),
 
         SizedBox(height: 16),
 
-        Text("Description", style: Fontstyles.roboto15px(context, ref)),
+        Text(
+          AppConstants.description,
+          style: Fontstyles.roboto15px(context, ref),
+        ),
         ReusableTextfield(
           controller: taskDescController,
           ref: ref,
           maxlines: 5,
-          hinttext: "Task description",
+          hinttext: AppConstants.taskDescription,
           suffixIcon: null,
           readOnly: false,
         ),
@@ -76,11 +80,14 @@ class _InputSectionState extends ConsumerState<InputSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Date", style: Fontstyles.roboto15px(context, ref)),
+                  Text(
+                    AppConstants.date,
+                    style: Fontstyles.roboto15px(context, ref),
+                  ),
                   ReusableTextfield(
                     controller: taskDateController,
                     ref: ref,
-                    hinttext: "Date",
+                    hinttext: AppConstants.date,
                     suffixIcon: Icon(Icons.calendar_month_rounded),
                     readOnly: true,
                     onTap:
@@ -98,11 +105,14 @@ class _InputSectionState extends ConsumerState<InputSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Time", style: Fontstyles.roboto15px(context, ref)),
+                  Text(
+                    AppConstants.time,
+                    style: Fontstyles.roboto15px(context, ref),
+                  ),
                   ReusableTextfield(
                     controller: taskTimeController,
                     ref: ref,
-                    hinttext: "Time",
+                    hinttext: AppConstants.time,
                     suffixIcon: Icon(Icons.alarm),
                     readOnly: true,
                     onTap:
@@ -120,7 +130,7 @@ class _InputSectionState extends ConsumerState<InputSection> {
 
         SizedBox(height: 16),
 
-        Text("Priority", style: Fontstyles.roboto15px(context, ref)),
+        Text(AppConstants.priority, style: Fontstyles.roboto15px(context, ref)),
 
         // Segmented buttons section
         Center(child: SegmentedButtonWidget(buttons: priorities)),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/common/widgets/logo.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
@@ -39,15 +40,18 @@ class LogInScreenComponent extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: 100),
-              Text("Welcome Back!", style: Fontstyles.roboto35px(context, ref)),
+              Text(
+                AppConstants.welcomeBack,
+                style: Fontstyles.roboto35px(context, ref),
+              ),
               SizedBox(height: 20),
               Text(
-                "Enter your name",
+                AppConstants.enterYourName,
                 style: Fontstyles.roboto16pxLight(context, ref),
               ),
               ReusableTextfield(
                 ref: ref,
-                hinttext: "Name",
+                hinttext: AppConstants.name,
                 readOnly: false,
                 controller: nameController,
                 filledColor: color.background,
@@ -55,18 +59,18 @@ class LogInScreenComponent extends ConsumerWidget {
               ),
               SizedBox(height: 20),
               Text(
-                "Enter your phone number",
+                AppConstants.enterYourPhoneNunmber,
                 style: Fontstyles.roboto16pxLight(context, ref),
               ),
               SizedBox(height: 10),
               PhoneNumberSection(),
               RichText(
                 text: TextSpan(
-                  text: "New around here? ",
+                  text: AppConstants.newAroundHere,
                   style: Fontstyles.roboto16pxLight(context, ref),
                   children: [
                     TextSpan(
-                      text: "SignUp",
+                      text: AppConstants.signUp,
                       style: Fontstyles.roboto16pxSemiBold(context, ref),
                       recognizer:
                           TapGestureRecognizer()
@@ -79,7 +83,7 @@ class LogInScreenComponent extends ConsumerWidget {
               ),
               SizedBox(height: 30),
               ReusableButton(
-                buttonText: "Log In",
+                buttonText: AppConstants.logIn,
                 onpressed: () {
                   Navigator.of(context).pushReplacement(
                     CustomFadeTransition(route: OtpVerficationContainer()),

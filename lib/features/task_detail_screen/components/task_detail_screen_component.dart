@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
@@ -19,7 +20,10 @@ class TaskDetailScreenComponent extends ConsumerWidget {
       appBar: AppBar(
         toolbarHeight: 30,
         backgroundColor: color.background,
-        title: Text("Task details", style: Fontstyles.roboto18px(context, ref)),
+        title: Text(
+          AppConstants.taskDetails,
+          style: Fontstyles.roboto18px(context, ref),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -50,7 +54,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
 
             // Due date
             Text(
-              "Due: ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+              "${AppConstants.due}: ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
               style: Fontstyles.roboto15px(context, ref),
             ),
           ],
@@ -93,7 +97,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                     ),
                     SizedBox(height: 30),
                     Text(
-                      "Created on: ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+                      "${AppConstants.createdOn}: ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
                       style: Fontstyles.roboto15px(context, ref),
                     ),
                     SizedBox(height: 5),
@@ -104,7 +108,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
 
             // Button
             ReusableButton(
-              buttonText: "Mark as done",
+              buttonText: AppConstants.markAsDone,
               onpressed: () {
                 // delete task from calendar - move to finished tasks section
               },
