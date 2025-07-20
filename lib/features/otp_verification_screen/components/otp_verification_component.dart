@@ -6,16 +6,24 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
+import 'package:checkit/common/widgets/reusable_snackbar.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
+import 'package:checkit/features/login_screen/core/provider/login_provider.dart';
 import 'package:checkit/features/home_screen/containers/home_screen_container.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/otp_verification_screen/core/providers/otp_provider.dart';
 
 class OtpVerificationComponent extends ConsumerWidget {
-  const OtpVerificationComponent({super.key});
+  final String userName;
+  const OtpVerificationComponent({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
+    final otpDB = ref.read(otpProvider);
+    final verificationId = ref.read(verificationIDProvider);
+    String otpCode = '';
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -53,16 +61,45 @@ class OtpVerificationComponent extends ConsumerWidget {
                   selectedColor: color.secondaryGradient1,
                   inactiveColor: color.textfieldBackground2,
                 ),
+                onChanged: (value) {
+                  otpCode = value;
+                },
               ),
 
               Spacer(),
 
               ReusableButton(
                 buttonText: AppConstants.confirm,
-                onpressed: () {
-                  Navigator.of(context).pushReplacement(
-                    CustomFadeTransition(route: HomeScreenContainer()),
-                  );
+                onpressed: () async {
+                  if (verificationId != null && otpCode.length == 6) {
+                    try {
+                      final user = await otpDB.verifyOTP(
+                        verificationID: verificationId,
+                        smsCode: otpCode,
+                        userName: userName,
+                      );
+
+                      if (user != null) {
+                        Navigator.of(context).pushReplacement(
+                          CustomFadeTransition(route: HomeScreenContainer()),
+                        );
+                      } else {
+                        ShowCustomSnackbar().showSnackbar(
+                          context,
+                          "Invalid OTP",
+                          color.errorColor,
+                          ref,
+                        );
+                      }
+                    } catch (e) {
+                      ShowCustomSnackbar().showSnackbar(
+                        context,
+                        "Error: ${e.toString()}",
+                        color.errorColor,
+                        ref,
+                      );
+                    }
+                  }
                 },
               ),
               SizedBox(height: 10),

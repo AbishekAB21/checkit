@@ -7,7 +7,9 @@ import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
 class PhoneNumberSection extends ConsumerWidget {
-  const PhoneNumberSection({super.key});
+
+  final void Function(String?) onPhoneNumberChanged;
+  const PhoneNumberSection({super.key, required this.onPhoneNumberChanged});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,6 +42,15 @@ class PhoneNumberSection extends ConsumerWidget {
           bottomLeft: Radius.circular(10),
         ),
       ),
+      
+      // On changed
+      onChanged: (phone) {
+        
+        if(onPhoneNumberChanged != null){
+
+          onPhoneNumberChanged(phone.completeNumber);
+        }
+      },
     );
   }
 }

@@ -7,8 +7,10 @@ import 'package:checkit/common/widgets/logo.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
+import 'package:checkit/common/widgets/reusable_snackbar.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
+import 'package:checkit/features/login_screen/core/provider/login_provider.dart';
 import 'package:checkit/features/login_screen/widgets/phone_number_section.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/otp_verification_screen/containers/otp_verfication_container.dart';
@@ -18,6 +20,7 @@ class LogInScreenComponent extends ConsumerWidget {
 
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  String? fullPhoneNumber;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,7 +66,11 @@ class LogInScreenComponent extends ConsumerWidget {
                 style: Fontstyles.roboto16pxLight(context, ref),
               ),
               SizedBox(height: 10),
-              PhoneNumberSection(),
+              PhoneNumberSection(
+                onPhoneNumberChanged: (value) {
+                  fullPhoneNumber = value;
+                },
+              ),
               RichText(
                 text: TextSpan(
                   text: AppConstants.newAroundHere,
@@ -85,9 +92,33 @@ class LogInScreenComponent extends ConsumerWidget {
               ReusableButton(
                 buttonText: AppConstants.logIn,
                 onpressed: () {
-                  Navigator.of(context).pushReplacement(
-                    CustomFadeTransition(route: OtpVerficationContainer()),
-                  );
+                  if (fullPhoneNumber != null &&
+                      nameController.text.trim().isNotEmpty) {
+                    final loginDB = ref.read(logInProvider);
+
+                    loginDB.sendOTP(
+                      phoneNumber: fullPhoneNumber!,
+                      onCodeSent: (verificationId) {
+                        ref.read(verificationIDProvider.notifier).state =
+                            verificationId;
+                        Navigator.of(context).pushReplacement(
+                          CustomFadeTransition(
+                            route: OtpVerficationContainer(
+                              userName: nameController.text.trim(),
+                            ),
+                          ),
+                        );
+                      },
+                      onError: (e) {
+                        ShowCustomSnackbar().showSnackbar(
+                          context,
+                          "Error: ${e.message}",
+                          color.errorColor,
+                          ref,
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ],
