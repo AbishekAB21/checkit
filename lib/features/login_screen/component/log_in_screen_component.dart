@@ -1,4 +1,3 @@
-import 'package:checkit/features/home_screen/containers/home_screen_container.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -93,7 +92,6 @@ class LogInScreenComponent extends ConsumerWidget {
               ReusableButton(
                 buttonText: AppConstants.logIn,
                 onpressed: () {
-                  // TODO: Uncomment when testing on real device
                   if (fullPhoneNumber != null &&
                       nameController.text.trim().isNotEmpty) {
                     final loginDB = ref.read(logInProvider);
@@ -122,13 +120,6 @@ class LogInScreenComponent extends ConsumerWidget {
                       },
                     );
                   }
-
-                  // TODO: Remove the below code after demo
-
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   CustomFadeTransition(route: HomeScreenContainer()),
-                  // );
                 },
               ),
             ],
