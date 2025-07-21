@@ -24,23 +24,25 @@ class OtpDb {
 
     // Saving User's name to firebase on initial login
     if (user != null) {
-      final userDoc = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid);
+      try {
+        final userDoc = FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid);
 
-          final docSnapshot = await userDoc.get();
+        final docSnapshot = await userDoc.get();
 
-          if(!docSnapshot.exists){
-            await userDoc.set({
-              'uid' : user.uid,
-              'phone' : user.phoneNumber,
-              'name' : userName,
-              'createdAt' : FieldValue.serverTimestamp(),
-            });
-          }
+        if (!docSnapshot.exists) {
+          await userDoc.set({
+            'uid': user.uid,
+            'phone': user.phoneNumber,
+            'name': userName,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+      } catch (e) {
+       //
+      }
     }
-
-    
 
     return user;
   }
