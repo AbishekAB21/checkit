@@ -52,7 +52,7 @@ class WelcomeTextSection extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Looks like we forgot your name -_-",
+                AppConstants.forgotYourname,
                 style: Fontstyles.roboto25px(context, ref),
               ),
             ],

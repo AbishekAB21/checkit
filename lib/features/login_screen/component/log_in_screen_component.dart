@@ -46,7 +46,7 @@ class LogInScreenComponent extends ConsumerWidget {
               children: [
                 SizedBox(height: 100),
                 Text(
-                  AppConstants.welcomeBack,
+                  AppConstants.welcome,
                   style: Fontstyles.roboto35px(context, ref),
                 ),
                 SizedBox(height: 20),
@@ -73,23 +73,6 @@ class LogInScreenComponent extends ConsumerWidget {
                     fullPhoneNumber = value;
                   },
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: AppConstants.newAroundHere,
-                    style: Fontstyles.roboto16pxLight(context, ref),
-                    children: [
-                      TextSpan(
-                        text: AppConstants.signUp,
-                        style: Fontstyles.roboto16pxSemiBold(context, ref),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap = () {
-                                //  SignUp navigation or logic
-                              },
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(height: 30),
                 ReusableButton(
                   buttonText: AppConstants.logIn,
@@ -97,7 +80,7 @@ class LogInScreenComponent extends ConsumerWidget {
                     if (fullPhoneNumber != null &&
                         nameController.text.trim().isNotEmpty) {
                       final loginDB = ref.read(logInProvider);
-            
+
                       loginDB.sendOTP(
                         phoneNumber: fullPhoneNumber!,
                         userName: nameController.text.trim(),
@@ -120,6 +103,13 @@ class LogInScreenComponent extends ConsumerWidget {
                             ref,
                           );
                         },
+                      );
+                    } else {
+                      ShowCustomSnackbar().showSnackbar(
+                        context,
+                        AppConstants.enterAllTheDetails,
+                        color.errorColor,
+                        ref,
                       );
                     }
                   },

@@ -14,7 +14,7 @@ class AppConstants {
   static const String taskName = 'Task Name';
   static const String taskDescription = 'Task Description';
   static const String hi = 'Hi';
-  static const String welcomeBack = 'Welcome Back!';
+  static const String welcome = 'Welcome!';
   static const String enterYourName = 'Enter your name';
   static const String name = 'Name';
   static const String phoneNumber = 'Phone number';
@@ -35,4 +35,8 @@ class AppConstants {
   static const String markAsDone = 'Mark as done';
   static const String welcomeToCheckIt = 'Welcome to CheckIt!';
   static const String planPrioritizeCheck = 'Plan it. Prioritize it. CheckIt';
+  static const String forgotYourname = 'Forgot your name -_-';
+  static const String logOut = 'Log Out';
+  static const String areYouSure = 'Are you sure you want to log out?';
+  static const String enterAllTheDetails = 'Enter all the details';
 }

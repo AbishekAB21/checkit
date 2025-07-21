@@ -3,12 +3,16 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:checkit/utils/theme/app_colors.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
+import 'package:checkit/common/widgets/reusable_alert_dialog.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
+import 'package:checkit/features/settings_screen/widgets/setting_screen_tile.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
+import 'package:checkit/features/welcome_screen/containers/welcome_screen_container.dart';
 import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
 
 class SettingsScreenComponent extends ConsumerWidget {
@@ -61,7 +65,7 @@ class SettingsScreenComponent extends ConsumerWidget {
                     ),
                 error:
                     (error, stack) => Text(
-                      "Forgot your name -_-",
+                      AppConstants.forgotYourname,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Fontstyles.roboto22px(context, ref),
@@ -72,45 +76,63 @@ class SettingsScreenComponent extends ConsumerWidget {
             SizedBox(height: 40),
 
             // Theme
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppConstants.darkMode,
-                  style: Fontstyles.roboto18px(context, ref),
-                ),
-                CupertinoSwitch(
-                  value: ref.watch(themeModeProvider) == ThemeMode.dark,
-                  onChanged: (_) {
-                    ref.read(themeModeProvider.notifier).toggleTheme();
-                  },
-                  activeTrackColor: appcolor.secondaryGradient1,
-                ),
-              ],
+            SettingScreenTile(
+              tilename: AppConstants.darkMode,
+              tileWidget: CupertinoSwitch(
+                value: ref.watch(themeModeProvider) == ThemeMode.dark,
+                onChanged: (_) {
+                  ref.read(themeModeProvider.notifier).toggleTheme();
+                },
+                activeTrackColor: appcolor.secondaryGradient1,
+              ),
             ),
 
             // Account details or settings
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppConstants.completedTasks,
-                  style: Fontstyles.roboto18px(context, ref),
+            SettingScreenTile(
+              tilename: AppConstants.completedTasks,
+              tileWidget: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    CustomFadeTransition(route: CompletedTaskScreenContainer()),
+                  );
+                },
+                icon: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: color.iconColor,
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      CustomFadeTransition(
-                        route: CompletedTaskScreenContainer(),
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: color.iconColor,
-                  ),
-                ),
-              ],
+              ),
+            ),
+
+            // Log Out
+            SettingScreenTile(
+              tilename: AppConstants.logOut,
+              tileWidget: IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (context) => ReusableAlertDialog(
+                          mainAlertDialogTitle: AppConstants.areYouSure,
+                          onPressedLeft: () async {
+                            await FirebaseAuth.instance.signOut();
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              CustomFadeTransition(
+                                route: WelcomeScreenContainer(),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                          onPressedRight: () {
+                            Navigator.pop(context);
+                          },
+                          onPressedLeftTitle: AppConstants.confirm,
+                          onPressedRightTitle: AppConstants.cancel,
+                        ),
+                  );
+                },
+                icon: Icon(Icons.logout_rounded, color: color.iconColor),
+              ),
             ),
 
             Spacer(),

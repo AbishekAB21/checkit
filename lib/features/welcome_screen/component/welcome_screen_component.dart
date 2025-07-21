@@ -78,7 +78,12 @@ class WelcomeScreenComponent extends ConsumerWidget {
                         recognizer:
                             TapGestureRecognizer()
                               ..onTap = () {
-                                //  SignUp navigation or logic
+                                Navigator.pushReplacement(
+                                  context,
+                                  CustomFadeTransition(
+                                    route: LogInScreenContainer(),
+                                  ),
+                                );
                               },
                       ),
                     ],
