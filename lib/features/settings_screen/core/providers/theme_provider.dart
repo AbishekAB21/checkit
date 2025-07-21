@@ -27,7 +27,7 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
     } else if (savedMode == 'dark') {
       state = ThemeMode.dark;
     } else {
-      state = ThemeMode.system;
+      state = ThemeMode.dark;
     }
   }
 

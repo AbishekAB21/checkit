@@ -38,91 +38,94 @@ class LogInScreenComponent extends ConsumerWidget {
 
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(height: 100),
-              Text(
-                AppConstants.welcomeBack,
-                style: Fontstyles.roboto35px(context, ref),
-              ),
-              SizedBox(height: 20),
-              Text(
-                AppConstants.enterYourName,
-                style: Fontstyles.roboto16pxLight(context, ref),
-              ),
-              ReusableTextfield(
-                ref: ref,
-                hinttext: AppConstants.name,
-                readOnly: false,
-                controller: nameController,
-                filledColor: color.background,
-                showBorder: true,
-              ),
-              SizedBox(height: 20),
-              Text(
-                AppConstants.enterYourPhoneNunmber,
-                style: Fontstyles.roboto16pxLight(context, ref),
-              ),
-              SizedBox(height: 10),
-              PhoneNumberSection(
-                onPhoneNumberChanged: (value) {
-                  fullPhoneNumber = value;
-                },
-              ),
-              RichText(
-                text: TextSpan(
-                  text: AppConstants.newAroundHere,
-                  style: Fontstyles.roboto16pxLight(context, ref),
-                  children: [
-                    TextSpan(
-                      text: AppConstants.signUp,
-                      style: Fontstyles.roboto16pxSemiBold(context, ref),
-                      recognizer:
-                          TapGestureRecognizer()
-                            ..onTap = () {
-                              //  SignUp navigation or logic
-                            },
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 100),
+                Text(
+                  AppConstants.welcomeBack,
+                  style: Fontstyles.roboto35px(context, ref),
                 ),
-              ),
-              SizedBox(height: 30),
-              ReusableButton(
-                buttonText: AppConstants.logIn,
-                onpressed: () {
-                  if (fullPhoneNumber != null &&
-                      nameController.text.trim().isNotEmpty) {
-                    final loginDB = ref.read(logInProvider);
-
-                    loginDB.sendOTP(
-                      phoneNumber: fullPhoneNumber!,
-                      userName: nameController.text.trim(),
-                      onCodeSent: (verificationId) {
-                        ref.read(verificationIDProvider.notifier).state =
-                            verificationId;
-                        Navigator.of(context).pushReplacement(
-                          CustomFadeTransition(
-                            route: OtpVerficationContainer(
-                              userName: nameController.text.trim(),
+                SizedBox(height: 20),
+                Text(
+                  AppConstants.enterYourName,
+                  style: Fontstyles.roboto16pxLight(context, ref),
+                ),
+                ReusableTextfield(
+                  ref: ref,
+                  hinttext: AppConstants.name,
+                  readOnly: false,
+                  controller: nameController,
+                  filledColor: color.background,
+                  showBorder: true,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  AppConstants.enterYourPhoneNunmber,
+                  style: Fontstyles.roboto16pxLight(context, ref),
+                ),
+                SizedBox(height: 10),
+                PhoneNumberSection(
+                  onPhoneNumberChanged: (value) {
+                    fullPhoneNumber = value;
+                  },
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: AppConstants.newAroundHere,
+                    style: Fontstyles.roboto16pxLight(context, ref),
+                    children: [
+                      TextSpan(
+                        text: AppConstants.signUp,
+                        style: Fontstyles.roboto16pxSemiBold(context, ref),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () {
+                                //  SignUp navigation or logic
+                              },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30),
+                ReusableButton(
+                  buttonText: AppConstants.logIn,
+                  onpressed: () {
+                    if (fullPhoneNumber != null &&
+                        nameController.text.trim().isNotEmpty) {
+                      final loginDB = ref.read(logInProvider);
+            
+                      loginDB.sendOTP(
+                        phoneNumber: fullPhoneNumber!,
+                        userName: nameController.text.trim(),
+                        onCodeSent: (verificationId) {
+                          ref.read(verificationIDProvider.notifier).state =
+                              verificationId;
+                          Navigator.of(context).pushReplacement(
+                            CustomFadeTransition(
+                              route: OtpVerficationContainer(
+                                userName: nameController.text.trim(),
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      onFailed: (e) {
-                        ShowCustomSnackbar().showSnackbar(
-                          context,
-                          "Error: ${e.message}",
-                          color.errorColor,
-                          ref,
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
-            ],
+                          );
+                        },
+                        onFailed: (e) {
+                          ShowCustomSnackbar().showSnackbar(
+                            context,
+                            "Error: ${e.message}",
+                            color.errorColor,
+                            ref,
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
