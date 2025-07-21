@@ -26,7 +26,7 @@ class HomeScreenComponent extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            WelcomeTextSection(name: "Nivi"),
+            WelcomeTextSection(),
 
             // Single line Calendar
             SizedBox(height: 20),

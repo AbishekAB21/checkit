@@ -1,3 +1,4 @@
+import 'package:checkit/common/methods/get_user_details.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/features/home_screen/core/models/task_model.dart';
@@ -37,3 +38,7 @@ class HomeScreenNotifier extends StateNotifier<TaskState> {
 final homeScreenProvider = StateNotifierProvider<HomeScreenNotifier, TaskState>(
   (ref) => HomeScreenNotifier(),
 );
+
+final userNameProvider = FutureProvider<String?>((ref) async{
+  return await GetUserDetails().getuserName();
+});

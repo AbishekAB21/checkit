@@ -8,6 +8,7 @@ import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
 
 class SettingsScreenComponent extends ConsumerWidget {
@@ -16,6 +17,8 @@ class SettingsScreenComponent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
+    final userName = ref.watch(userNameProvider);
+
     return Scaffold(
       backgroundColor: color.background,
       appBar: AppBar(
@@ -48,11 +51,22 @@ class SettingsScreenComponent extends ConsumerWidget {
             ),
             SizedBox(height: 5),
             Center(
-              child: Text(
-                "Abishek",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Fontstyles.roboto22px(context, ref),
+              child: userName.when(
+                data:
+                    (name) => Text(
+                      "$name",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Fontstyles.roboto22px(context, ref),
+                    ),
+                error:
+                    (error, stack) => Text(
+                      "Forgot your name -_-",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Fontstyles.roboto22px(context, ref),
+                    ),
+                loading: () => CircularProgressIndicator(),
               ),
             ),
             SizedBox(height: 40),
