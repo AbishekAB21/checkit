@@ -1,3 +1,4 @@
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,6 +66,8 @@ class DateTimePicker {
       },
     );
 
+    if (!context.mounted) return;
+
     if (pickedTime != null) {
       final timeNow = DateTime.now();
       final selectedDateTime = DateTime(
@@ -82,7 +85,7 @@ class DateTimePicker {
       } else {
         ShowCustomSnackbar().showSnackbar(
           context,
-          "Please pick a time in the future",
+          AppConstants.futureTime,
           color.errorColor,
           ref,
         );

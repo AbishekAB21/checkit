@@ -39,4 +39,6 @@ class AppConstants {
   static const String logOut = 'Log Out';
   static const String areYouSure = 'Are you sure you want to log out?';
   static const String enterAllTheDetails = 'Enter all the details';
+  static const String error = 'Error';
+  static const String futureTime = 'Please pick a time in the future';
 }

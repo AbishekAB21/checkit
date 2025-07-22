@@ -108,7 +108,7 @@ class LogInScreenComponent extends ConsumerWidget {
                               loading.state = false;
                               ShowCustomSnackbar().showSnackbar(
                                 context,
-                                "Error: ${e.message}",
+                                "${AppConstants.error}: ${e.message}",
                                 color.errorColor,
                                 ref,
                               );
