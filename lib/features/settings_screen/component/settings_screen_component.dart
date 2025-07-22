@@ -65,7 +65,7 @@ class SettingsScreenComponent extends ConsumerWidget {
                             profilePicUrl != null
                                 ? NetworkImage(profilePicUrl)
                                 : AssetImage(
-                                      "assets/images/default_profile.png",
+                                      "assets/images/profilePlaceholder.png",
                                     )
                                     as ImageProvider,
                         radius: 50,

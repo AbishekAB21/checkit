@@ -44,7 +44,7 @@ class WelcomeTextSection extends ConsumerWidget {
                       image:
                           profilePicUrl != null
                               ? NetworkImage(profilePicUrl)
-                              : AssetImage("assets/images/default_profile.png")
+                              : AssetImage("assets/images/profilePlaceholder.png")
                                   as ImageProvider,
                       fit: BoxFit.cover,
                     ),
