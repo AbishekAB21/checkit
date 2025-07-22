@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:checkit/features/otp_verification_screen/core/database/otp_db.dart';
 
 /// This file only handles OTP sending logic
 /// Refer [OtpDb] for OTP verification logic
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;

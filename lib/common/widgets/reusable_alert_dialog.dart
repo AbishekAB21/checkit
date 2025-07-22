@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
-import 'package:checkit/utils/constants/app_constants.dart';
 
 class ReusableAlertDialog extends ConsumerWidget {
   final void Function()? onPressedLeft;

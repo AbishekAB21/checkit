@@ -1,9 +1,9 @@
-import 'package:checkit/common/widgets/reusable_snackbar.dart';
-import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:checkit/common/widgets/reusable_snackbar.dart';
+import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 
 class DateTimePicker {
