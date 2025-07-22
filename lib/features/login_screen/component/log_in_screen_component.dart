@@ -5,9 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkit/common/widgets/logo.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
+import 'package:checkit/common/widgets/loading_widget.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/widgets/reusable_snackbar.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
+import 'package:checkit/common/providers/loading_state_provider.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/login_screen/core/provider/login_provider.dart';
 import 'package:checkit/features/login_screen/widgets/phone_number_section.dart';
@@ -24,6 +26,8 @@ class LogInScreenComponent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
+    final loading = ref.watch(authLoadingProvider);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -35,87 +39,99 @@ class LogInScreenComponent extends ConsumerWidget {
           title: Logo(height: 40, width: 40, iconSize: 20),
         ),
 
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height: 100),
-                Text(
-                  AppConstants.welcome,
-                  style: Fontstyles.roboto35px(context, ref),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  AppConstants.enterYourName,
-                  style: Fontstyles.roboto16pxLight(context, ref),
-                ),
-                ReusableTextfield(
-                  ref: ref,
-                  hinttext: AppConstants.name,
-                  readOnly: false,
-                  controller: nameController,
-                  filledColor: color.background,
-                  showBorder: true,
-                ),
-                SizedBox(height: 20),
-                Text(
-                  AppConstants.enterYourPhoneNunmber,
-                  style: Fontstyles.roboto16pxLight(context, ref),
-                ),
-                SizedBox(height: 10),
-                PhoneNumberSection(
-                  onPhoneNumberChanged: (value) {
-                    fullPhoneNumber = value;
-                  },
-                ),
-                SizedBox(height: 30),
-                ReusableButton(
-                  buttonText: AppConstants.logIn,
-                  onpressed: () {
-                    if (fullPhoneNumber != null &&
-                        nameController.text.trim().isNotEmpty) {
-                      final loginDB = ref.read(logInProvider);
+        body: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 100),
+                    Text(
+                      AppConstants.welcome,
+                      style: Fontstyles.roboto35px(context, ref),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      AppConstants.enterYourName,
+                      style: Fontstyles.roboto16pxLight(context, ref),
+                    ),
+                    ReusableTextfield(
+                      ref: ref,
+                      hinttext: AppConstants.name,
+                      readOnly: false,
+                      controller: nameController,
+                      filledColor: color.background,
+                      showBorder: true,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      AppConstants.enterYourPhoneNunmber,
+                      style: Fontstyles.roboto16pxLight(context, ref),
+                    ),
+                    SizedBox(height: 10),
+                    PhoneNumberSection(
+                      onPhoneNumberChanged: (value) {
+                        fullPhoneNumber = value;
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    ReusableButton(
+                      buttonText: AppConstants.logIn,
+                      onpressed: () {
+                        final loading = ref.watch(authLoadingProvider.notifier);
 
-                      loginDB.sendOTP(
-                        phoneNumber: fullPhoneNumber!,
-                        userName: nameController.text.trim(),
-                        onCodeSent: (verificationId) {
-                          ref.read(verificationIDProvider.notifier).state =
-                              verificationId;
-                          Navigator.of(context).pushReplacement(
-                            CustomFadeTransition(
-                              route: OtpVerficationContainer(
-                                userName: nameController.text.trim(),
-                              ),
-                            ),
+                        if (fullPhoneNumber != null &&
+                            nameController.text.trim().isNotEmpty) {
+                          loading.state = true;
+                          final loginDB = ref.read(logInProvider);
+
+                          loginDB.sendOTP(
+                            phoneNumber: fullPhoneNumber!,
+                            userName: nameController.text.trim(),
+                            onCodeSent: (verificationId) {
+                              ref.read(verificationIDProvider.notifier).state =
+                                  verificationId;
+                              loading.state = false;
+                              Navigator.of(context).pushReplacement(
+                                CustomFadeTransition(
+                                  route: OtpVerficationContainer(
+                                    userName: nameController.text.trim(),
+                                  ),
+                                ),
+                              );
+                            },
+                            onFailed: (e) {
+                              loading.state = false;
+                              ShowCustomSnackbar().showSnackbar(
+                                context,
+                                "Error: ${e.message}",
+                                color.errorColor,
+                                ref,
+                              );
+                            },
                           );
-                        },
-                        onFailed: (e) {
+                          
+                        } else {
                           ShowCustomSnackbar().showSnackbar(
                             context,
-                            "Error: ${e.message}",
+                            AppConstants.enterAllTheDetails,
                             color.errorColor,
                             ref,
                           );
-                        },
-                      );
-                    } else {
-                      ShowCustomSnackbar().showSnackbar(
-                        context,
-                        AppConstants.enterAllTheDetails,
-                        color.errorColor,
-                        ref,
-                      );
-                    }
-                  },
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+
+            if (loading) Center(child: LoadingWidget()),
+          ],
         ),
       ),
     );
