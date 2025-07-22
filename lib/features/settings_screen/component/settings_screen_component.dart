@@ -13,6 +13,7 @@ import 'package:checkit/features/settings_screen/widgets/setting_screen_tile.dar
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 import 'package:checkit/features/welcome_screen/containers/welcome_screen_container.dart';
+import 'package:checkit/features/settings_screen/core/providers/settings_screen_provider.dart';
 import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
 
 class SettingsScreenComponent extends ConsumerWidget {
@@ -22,6 +23,9 @@ class SettingsScreenComponent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
     final userName = ref.watch(userNameProvider);
+    final profilePicUrl = ref.watch(profilePicUrlProvider);
+    final picLoading = ref.watch(profilePicLoadingProvider);
+    final picController = ref.read(profilePicControllerProvider);
 
     return Scaffold(
       backgroundColor: color.background,
@@ -45,11 +49,43 @@ class SettingsScreenComponent extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(60),
                 ),
 
-                // TODO : Wrap with Inkwell or Gesturedetector to allow changing profile pic
-                child: CircleAvatar(
-                  backgroundColor: color.secondaryGradient1,
-                  backgroundImage: AssetImage("assets/images/cast_test.jpeg"),
-                  radius: 50,
+                child: GestureDetector(
+                  onLongPress: () {
+                    /* Expand Profile picture */
+                  },
+                  onTap: () async {
+                    // Change profile picture by opening gallery
+                    await picController.pickAndUploadImage();
+                  },
+                  child: Stack(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: color.secondaryGradient1,
+                        backgroundImage:
+                            profilePicUrl != null
+                                ? NetworkImage(profilePicUrl)
+                                : AssetImage(
+                                      "assets/images/default_profile.png",
+                                    )
+                                    as ImageProvider,
+                        radius: 50,
+                      ),
+                      if (picLoading)
+                        Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: color.secondaryGradient2,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: color.iconColor,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),

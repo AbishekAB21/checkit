@@ -8,6 +8,7 @@ import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 import 'package:checkit/features/settings_screen/container/settings_screen_container.dart';
+import 'package:checkit/features/settings_screen/core/providers/settings_screen_provider.dart';
 
 class WelcomeTextSection extends ConsumerWidget {
   const WelcomeTextSection({super.key});
@@ -15,6 +16,7 @@ class WelcomeTextSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final username = ref.watch(userNameProvider);
+    final profilePicUrl = ref.watch(profilePicUrlProvider);
 
     return username.when(
       data:
@@ -39,7 +41,11 @@ class WelcomeTextSection extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: appcolor.secondaryGradient2,
                     image: DecorationImage(
-                      image: AssetImage("assets/images/cast_test.jpeg"),
+                      image:
+                          profilePicUrl != null
+                              ? NetworkImage(profilePicUrl)
+                              : AssetImage("assets/images/default_profile.png")
+                                  as ImageProvider,
                       fit: BoxFit.cover,
                     ),
                   ),
