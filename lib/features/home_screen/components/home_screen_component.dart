@@ -1,5 +1,3 @@
-import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
-import 'package:checkit/features/task_detail_screen/containers/task_detail_screen_container.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkit/features/home_screen/widgets/task_widget.dart';
 import 'package:checkit/features/home_screen/widgets/table_calendar.dart';
 import 'package:checkit/features/home_screen/widgets/welcome_section.dart';
+import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/home_screen/widgets/add_new_task_popup.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/task_detail_screen/containers/task_detail_screen_container.dart';
 
 class HomeScreenComponent extends ConsumerWidget {
   const HomeScreenComponent({super.key});

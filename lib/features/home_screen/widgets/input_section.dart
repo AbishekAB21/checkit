@@ -7,6 +7,7 @@ import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/widgets/segmented_button_widget.dart';
+import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 
 class InputSection extends ConsumerStatefulWidget {
   final WidgetRef ref;
@@ -54,6 +55,8 @@ class _InputSectionState extends ConsumerState<InputSection> {
           hinttext: AppConstants.taskName,
           suffixIcon: null,
           readOnly: false,
+          onChanged:
+              (val) => ref.read(homeScreenProvider.notifier).setTitle(val),
         ),
 
         SizedBox(height: 16),
@@ -69,6 +72,8 @@ class _InputSectionState extends ConsumerState<InputSection> {
           hinttext: AppConstants.taskDescription,
           suffixIcon: null,
           readOnly: false,
+          onChanged:
+              (val) => ref.read(homeScreenProvider.notifier).setDesc(val),
         ),
 
         SizedBox(height: 16),
@@ -96,6 +101,9 @@ class _InputSectionState extends ConsumerState<InputSection> {
                           controller: taskDateController,
                           ref: ref,
                         ),
+                    onChanged:
+                        (val) =>
+                            ref.read(homeScreenProvider.notifier).setDate(val),
                   ),
                 ],
               ),
@@ -121,6 +129,9 @@ class _InputSectionState extends ConsumerState<InputSection> {
                           controller: taskTimeController,
                           ref: ref,
                         ),
+                    onChanged:
+                        (val) =>
+                            ref.read(homeScreenProvider.notifier).setTime(val),
                   ),
                 ],
               ),

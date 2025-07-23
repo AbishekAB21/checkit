@@ -6,10 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:checkit/utils/constants/app_constants.dart';
+
 final profilePicUrlProvider = FutureProvider<String>((ref) async {
   final uid = FirebaseAuth.instance.currentUser?.uid;
 
-  if (uid == null) throw Exception('Not logged in');
+  if (uid == null) throw Exception(AppConstants.userNotLoggedIn);
 
   final doc =
       await FirebaseFirestore.instance.collection('users').doc(uid).get();

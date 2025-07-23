@@ -41,4 +41,6 @@ class AppConstants {
   static const String enterAllTheDetails = 'Enter all the details';
   static const String error = 'Error';
   static const String futureTime = 'Please pick a time in the future';
+  static const String userNotLoggedIn = 'User not logged in';
+  
 }

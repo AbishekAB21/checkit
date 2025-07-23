@@ -1,7 +1,7 @@
 import 'package:checkit/common/methods/get_user_details.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:checkit/features/home_screen/core/models/task_model.dart';
+import 'package:checkit/features/home_screen/core/models/task_state_model.dart';
 import 'package:checkit/features/home_screen/components/home_screen_component.dart';
 
 /// Manages state globally for [HomeScreenComponent] by referencing [TaskState]

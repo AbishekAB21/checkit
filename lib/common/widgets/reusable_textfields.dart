@@ -15,6 +15,7 @@ class ReusableTextfield extends StatelessWidget {
   final void Function()? onTap;
   final bool readOnly;
   final TextEditingController controller;
+  final Function(String)? onChanged;
   const ReusableTextfield({
     super.key,
     required this.ref,
@@ -26,6 +27,7 @@ class ReusableTextfield extends StatelessWidget {
     this.onTap,
     required this.readOnly,
     required this.controller,
+    this.onChanged
   });
 
   @override
@@ -69,6 +71,7 @@ class ReusableTextfield extends StatelessWidget {
           hintText: hinttext,
           hintStyle: Fontstyles.roboto15Hintpx(context, ref),
         ),
+        onChanged: onChanged,
       ),
     );
   }

@@ -1,3 +1,7 @@
+import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
+
+/// State model for Riverpod [HomeScreenNotifier]
+
 class TaskState {
   final String title;
   final String desc;
@@ -24,7 +28,7 @@ class TaskState {
       title: title ?? this.title,
       desc: desc ?? this.desc,
       date: date ?? this.date,
-      time: title ?? this.time,
+      time: time ?? this.time,
       priority: priority ?? this.priority,
     );
   }
