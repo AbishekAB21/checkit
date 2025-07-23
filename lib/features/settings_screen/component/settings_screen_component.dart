@@ -7,13 +7,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:checkit/utils/theme/app_colors.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:checkit/common/widgets/reusable_alert_dialog.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/widgets/setting_screen_tile.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/settings_screen/widgets/profile_picture_widget.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 import 'package:checkit/features/welcome_screen/containers/welcome_screen_container.dart';
-import 'package:checkit/features/settings_screen/core/providers/settings_screen_provider.dart';
 import 'package:checkit/features/completed_task_screen/containers/completed_task_screen_container.dart';
 
 class SettingsScreenComponent extends ConsumerWidget {
@@ -23,9 +24,6 @@ class SettingsScreenComponent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
     final userName = ref.watch(userNameProvider);
-    final profilePicUrl = ref.watch(profilePicUrlProvider);
-    final picLoading = ref.watch(profilePicLoadingProvider);
-    final picController = ref.read(profilePicControllerProvider);
 
     return Scaffold(
       backgroundColor: color.background,
@@ -41,54 +39,7 @@ class SettingsScreenComponent extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Profile section
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: color.secondaryGradient1,
-                  borderRadius: BorderRadius.circular(60),
-                ),
-
-                child: GestureDetector(
-                  onLongPress: () {
-                    /* Expand Profile picture */
-                  },
-                  onTap: () async {
-                    // Change profile picture by opening gallery
-                    await picController.pickAndUploadImage();
-                  },
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: color.secondaryGradient1,
-                        backgroundImage:
-                            profilePicUrl != null
-                                ? NetworkImage(profilePicUrl)
-                                : AssetImage(
-                                      "assets/images/profilePlaceholder.png",
-                                    )
-                                    as ImageProvider,
-                        radius: 50,
-                      ),
-                      if (picLoading)
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: color.secondaryGradient2,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: color.iconColor,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            Center(child: ProfilePictureWidget()),
             SizedBox(height: 5),
             Center(
               child: userName.when(
@@ -150,6 +101,7 @@ class SettingsScreenComponent extends ConsumerWidget {
                         (context) => ReusableAlertDialog(
                           mainAlertDialogTitle: AppConstants.areYouSure,
                           onPressedLeft: () async {
+                            await DefaultCacheManager().emptyCache();
                             await FirebaseAuth.instance.signOut();
                             Navigator.pushAndRemoveUntil(
                               context,

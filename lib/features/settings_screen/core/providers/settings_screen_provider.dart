@@ -1,12 +1,26 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
-final profilePicUrlProvider = StateProvider<String?>((ref) => null);
+final profilePicUrlProvider = FutureProvider<String>((ref) async {
+  final uid = FirebaseAuth.instance.currentUser?.uid;
+
+  if (uid == null) throw Exception('Not logged in');
+
+  final doc =
+      await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  final url = doc.data()?['profilePic'];
+
+  if (url == null || url is! String || url.isEmpty) {
+    throw Exception('No profile picture found');
+  }
+
+  return url;
+});
 
 final profilePicLoadingProvider = StateProvider<bool>((ref) => false);
 
@@ -51,27 +65,11 @@ class ProfilePicController {
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'profilePic': downloadUrl,
       });
-
-      ref.read(profilePicUrlProvider.notifier).state = downloadUrl;
+      ref.invalidate(profilePicUrlProvider);
     } catch (e) {
       // Print here
     } finally {
       ref.read(profilePicLoadingProvider.notifier).state = false;
-    }
-  }
-
-  // Reading Image from Database
-
-  Future<void> loadProfileImage() async {
-    final uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid == null) return;
-
-    final doc =
-        await FirebaseFirestore.instance.collection('users').doc(uid).get();
-    final url = doc.data()?['profilePic'];
-
-    if (url != null && url is String) {
-      ref.read(profilePicUrlProvider.notifier).state = url;
     }
   }
 }
