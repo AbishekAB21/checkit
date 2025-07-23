@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
 class TaskWidget extends ConsumerWidget {
   final String? priority;
-  const TaskWidget({super.key, this.priority = "Low"});
+  final TaskModel task;
+  const TaskWidget({super.key, this.priority = "Low", required this.task});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
+    final taskDate = DateTime.parse(task.date);
+     final dateText = "${taskDate.day} ${_monthName(taskDate.month)}";
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(20),
@@ -27,7 +32,7 @@ class TaskWidget extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Attend the meeting regarding project set up.",
+            task.title,
             style: Fontstyles.roboto18px(context, ref),
             maxLines: 2,
           ),
@@ -39,7 +44,7 @@ class TaskWidget extends ConsumerWidget {
                 children: [
                   Icon(Icons.calendar_month_rounded),
                   Text(
-                    " ${DateTime.now().day} July",
+                    " $dateText",
                     style: Fontstyles.roboto15px(context, ref),
                   ),
                 ],
@@ -65,5 +70,23 @@ class TaskWidget extends ConsumerWidget {
         : priorityColor == "medium"
         ? color.warningColor
         : color.iconColor;
+  }
+
+  String _monthName(int month) {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return months[month - 1];
   }
 }

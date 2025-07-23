@@ -22,4 +22,21 @@ class HomeDb {
         .collection('tasks')
         .add(task.toMap());
   }
+
+  Stream<List<TaskModel>> getDataFromDatabase() {
+    final uid = _auth.currentUser?.uid;
+
+    if (uid == null) throw Exception(AppConstants.userNotLoggedIn);
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('tasks')
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return TaskModel.fromMap(doc.data());
+          }).toList();
+        });
+  }
 }

@@ -1,6 +1,6 @@
-import 'package:checkit/common/methods/get_user_details.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:checkit/common/methods/get_user_details.dart';
 import 'package:checkit/features/home_screen/core/models/task_state_model.dart';
 import 'package:checkit/features/home_screen/components/home_screen_component.dart';
 
@@ -41,4 +41,8 @@ final homeScreenProvider = StateNotifierProvider<HomeScreenNotifier, TaskState>(
 
 final userNameProvider = FutureProvider<String?>((ref) async{
   return await GetUserDetails().getuserName();
+});
+
+final selectedDateProvider = StateProvider<DateTime>((ref) {
+  return DateTime.now();
 });

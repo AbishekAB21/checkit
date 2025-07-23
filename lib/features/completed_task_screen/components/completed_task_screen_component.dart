@@ -28,7 +28,9 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return TaskWidget(priority: "High");
+                  return null;
+                  
+                  //TaskWidget(priority: "High");
                 },
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 10);
