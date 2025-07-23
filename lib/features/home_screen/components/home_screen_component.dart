@@ -76,7 +76,7 @@ class HomeScreenComponent extends ConsumerWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             CustomFadeTransition(
-                              route: TaskDetailScreenContainer(),
+                              route: TaskDetailScreenContainer(task: task,),
                             ),
                           );
                         },

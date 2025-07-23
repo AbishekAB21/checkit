@@ -5,25 +5,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
+import 'package:checkit/common/methods/date_time_picker.dart';
+import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
 class TaskDetailScreenComponent extends ConsumerWidget {
-  const TaskDetailScreenComponent({super.key});
+  final TaskModel task;
+  const TaskDetailScreenComponent({super.key, required this.task});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
+    final taskDate = DateTime.parse(task.date);
+    final dateText =
+        "${taskDate.day} ${DateTimePicker().monthName(taskDate.month)}";
 
     return Scaffold(
       backgroundColor: color.background,
 
       appBar: AppBar(
-        toolbarHeight: 30,
+        toolbarHeight: 45,
         backgroundColor: color.background,
         title: Text(
           AppConstants.taskDetails,
           style: Fontstyles.roboto18px(context, ref),
         ),
+        actions: [
+          // Edit Task
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.more_vert_rounded, color: color.iconColor),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -31,10 +44,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Task title
-            Text(
-              "Attend a meeting regarding product setup.",
-              style: Fontstyles.roboto35px(context, ref),
-            ),
+            Text(task.title, style: Fontstyles.roboto35px(context, ref)),
             SizedBox(height: 10),
 
             // Priority indicator
@@ -45,7 +55,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Text(
-                "High",
+                task.priority,
                 style: Fontstyles.roboto16pxSemiBold(context, ref),
               ),
             ),
@@ -54,7 +64,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
 
             // Due date
             Text(
-              "${AppConstants.due}: ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+              "${AppConstants.due}: $dateText",
               style: Fontstyles.roboto15px(context, ref),
             ),
           ],
@@ -89,15 +99,12 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Attend the scheduled team meeting focused on the upcoming product launch. "
-                      "Discuss key milestones, assigned responsibilities, and current progress. "
-                      "Bring up any challenges or dependencies that need resolution. "
-                      "Document meeting notes and share the action items post-discussion.",
+                      task.description,
                       style: Fontstyles.roboto18px(context, ref),
                     ),
                     SizedBox(height: 30),
                     Text(
-                      "${AppConstants.createdOn}: ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+                      "${AppConstants.createdOn}: $dateText at ${task.time}",
                       style: Fontstyles.roboto15px(context, ref),
                     ),
                     SizedBox(height: 5),

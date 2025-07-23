@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 
@@ -15,7 +16,7 @@ class TaskWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
     final taskDate = DateTime.parse(task.date);
-     final dateText = "${taskDate.day} ${_monthName(taskDate.month)}";
+    final dateText = "${taskDate.day} ${DateTimePicker().monthName(taskDate.month)}";
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -72,21 +73,5 @@ class TaskWidget extends ConsumerWidget {
         : color.iconColor;
   }
 
-  String _monthName(int month) {
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    return months[month - 1];
-  }
+
 }
