@@ -12,6 +12,7 @@ import 'package:checkit/features/home_screen/widgets/input_section.dart';
 import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class AddNewTaskPopup {
   void showBottomSheet(BuildContext context, WidgetRef ref) {
@@ -97,6 +98,7 @@ class AddNewTaskPopup {
                                       }
 
                                       final task = TaskModel(
+                                        taskId: Uuid().v4(),
                                         title: taskState.title,
                                         description: taskState.desc,
                                         date: taskState.date,

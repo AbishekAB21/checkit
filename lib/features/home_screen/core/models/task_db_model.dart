@@ -1,4 +1,5 @@
 class TaskModel {
+  final String taskId;
   final String title;
   final String description;
   final String date;
@@ -6,6 +7,7 @@ class TaskModel {
   final String priority;
 
   TaskModel({
+    required this.taskId,
     required this.title,
     required this.description,
     required this.date,
@@ -15,6 +17,7 @@ class TaskModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'taskId' : taskId,
       'title': title,
       'description': description,
       'date': date,
@@ -25,6 +28,7 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
+      taskId: map['taskId'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       date: map['date'] ?? '',

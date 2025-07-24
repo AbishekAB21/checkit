@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
+import 'package:lottie/lottie.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,10 +41,6 @@ class HomeScreenComponent extends ConsumerWidget {
             SizedBox(height: 20),
             CalendarWidget(),
 
-            /* The selected day's tasks (filtered by time, 
-            priorities red:high, yellow:medium white:low) */
-
-            // click each priority to show its details
             SizedBox(height: 30),
 
             Expanded(

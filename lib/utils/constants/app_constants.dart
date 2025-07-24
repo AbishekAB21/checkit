@@ -42,5 +42,8 @@ class AppConstants {
   static const String error = 'Error';
   static const String futureTime = 'Please pick a time in the future';
   static const String userNotLoggedIn = 'User not logged in';
+  static const String taskNotFound = 'Task not found';
+  static const String somethingWentWrong = 'Something went wrong';
+  static const String nothingToSeeHere = 'Nothing to see here'; 
   
 }

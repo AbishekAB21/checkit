@@ -6,12 +6,15 @@ import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/methods/date_time_picker.dart';
+import 'package:checkit/common/widgets/reusable_snackbar.dart';
 import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/task_detail_screen/core/database/task_detail_db.dart';
 
 class TaskDetailScreenComponent extends ConsumerWidget {
   final TaskModel task;
-  const TaskDetailScreenComponent({super.key, required this.task});
+  final bool? done;
+  const TaskDetailScreenComponent({super.key, required this.task, this.done = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -114,11 +117,25 @@ class TaskDetailScreenComponent extends ConsumerWidget {
             ),
 
             // Button
-            ReusableButton(
-              buttonText: AppConstants.markAsDone,
-              onpressed: () {
-                // delete task from calendar - move to finished tasks section
-              },
+            Visibility(
+              visible: done ?? true,
+              child: ReusableButton(
+                buttonText: AppConstants.markAsDone,
+                onpressed: () {
+                  // delete task from calendar - move to finished tasks section
+                  try {
+                    TaskDetailDb().moveToCompletedTasks(task.taskId);
+                    Navigator.pop(context);
+                  } catch (e) {
+                    ShowCustomSnackbar().showSnackbar(
+                      context,
+                      "Error: $e",
+                      color.errorColor,
+                      ref,
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
