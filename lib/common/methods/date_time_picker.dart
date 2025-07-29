@@ -9,7 +9,7 @@ import 'package:checkit/features/home_screen/core/providers/home_screen_provider
 
 class DateTimePicker {
   // Date picker
-  static Future<void> pickDate({
+  static Future<DateTime?> pickDate({
     required BuildContext context,
     required TextEditingController controller,
     required WidgetRef ref,
@@ -39,6 +39,8 @@ class DateTimePicker {
       controller.text = formattedDate;
       ref.read(homeScreenProvider.notifier).setDate(formattedDate);
     }
+
+    return pickedDate;
   }
 
   // Time picker
@@ -46,6 +48,7 @@ class DateTimePicker {
     required BuildContext context,
     required TextEditingController controller,
     required WidgetRef ref,
+    required DateTime pickedDate,
   }) async {
     final color = ref.watch(themeProvider);
     final currentTime = TimeOfDay.now();
@@ -70,15 +73,19 @@ class DateTimePicker {
 
     if (pickedTime != null) {
       final timeNow = DateTime.now();
-      final selectedDateTime = DateTime(
-        timeNow.year,
-        timeNow.month,
-        timeNow.day,
+       final selectedDateTime = DateTime(
+        pickedDate.year,
+        pickedDate.month,
+        pickedDate.day,
         pickedTime.hour,
         pickedTime.minute,
       );
 
-      if (selectedDateTime.isAfter(timeNow)) {
+          final isToday = pickedDate.year == timeNow.year &&
+          pickedDate.month == timeNow.month &&
+          pickedDate.day == timeNow.day;
+
+      if ((isToday && selectedDateTime.isAfter(timeNow)) || !isToday) {
         final formattedTime = pickedTime.format(context);
         controller.text = formattedTime;
         ref.read(homeScreenProvider.notifier).setTime(formattedTime);

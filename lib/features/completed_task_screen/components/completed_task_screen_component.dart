@@ -36,7 +36,7 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
               child: taskStream.when(
                 data: (tasks) {
                   if (tasks.isEmpty) {
-                    return Text(AppConstants.nothingToSeeHere);
+                    return Center(child: Text(AppConstants.nothingToSeeHere));
                   }
 
                   return ListView.separated(

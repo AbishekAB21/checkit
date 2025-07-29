@@ -10,7 +10,7 @@ class GetUserDetails {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(user.uid)
-              .get();
+              .get(const GetOptions(source: Source.server));
 
       if(doc.exists){
         return doc.data()?['name'];

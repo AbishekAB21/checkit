@@ -123,12 +123,31 @@ class _InputSectionState extends ConsumerState<InputSection> {
                     hinttext: AppConstants.time,
                     suffixIcon: Icon(Icons.alarm),
                     readOnly: true,
-                    onTap:
-                        () => DateTimePicker.pickTime(
-                          context: context,
-                          controller: taskTimeController,
-                          ref: ref,
-                        ),
+                    onTap: () async {
+                      // Ensure the user has selected a date first
+                      if (taskDateController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Please pick a date first.")),
+                        );
+                        return;
+                      }
+
+                      // Parse the picked date from the text controller
+                      final parts = taskDateController.text.split('-');
+                      final pickedDate = DateTime(
+                        int.parse(parts[0]),
+                        int.parse(parts[1]),
+                        int.parse(parts[2]),
+                      );
+
+                      await DateTimePicker.pickTime(
+                        context: context,
+                        controller: taskTimeController,
+                        ref: ref,
+                        pickedDate: pickedDate,
+                      );
+                    },
+
                     onChanged:
                         (val) =>
                             ref.read(homeScreenProvider.notifier).setTime(val),

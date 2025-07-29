@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 import 'package:checkit/utils/theme/app_colors.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:checkit/common/widgets/reusable_alert_dialog.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/widgets/setting_screen_tile.dart';
@@ -103,6 +103,7 @@ class SettingsScreenComponent extends ConsumerWidget {
                           onPressedLeft: () async {
                             await DefaultCacheManager().emptyCache();
                             await FirebaseAuth.instance.signOut();
+                            ref.invalidate(userNameProvider); // Clears provider
                             Navigator.pushAndRemoveUntil(
                               context,
                               CustomFadeTransition(
