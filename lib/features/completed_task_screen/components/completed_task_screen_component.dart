@@ -47,7 +47,10 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
                           Navigator.push(
                             context,
                             CustomFadeTransition(
-                              route: TaskDetailScreenContainer(task: task, done: false,),
+                              route: TaskDetailScreenContainer(
+                                taskId: task.taskId,
+                                done: false,
+                              ),
                             ),
                           );
                         },

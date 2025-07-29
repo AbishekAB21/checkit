@@ -35,7 +35,6 @@ class HomeDb {
         .collection('tasks')
         .doc(task.taskId)
         .update(task.toMap());
-      
   }
 
   Stream<List<TaskModel>> getDataFromDatabase() {
@@ -52,6 +51,27 @@ class HomeDb {
           return snapshot.docs.map((doc) {
             return TaskModel.fromMap(doc.data());
           }).toList();
+        });
+  }
+
+  Stream<TaskModel> getTaskByIdStream(String taskId) {
+    final uid = _auth.currentUser?.uid;
+
+    if (uid == null) throw Exception(AppConstants.userNotLoggedIn);
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('tasks')
+        .doc(taskId)
+        .snapshots()
+        .map((docSnapshot) {
+          if (docSnapshot.exists && docSnapshot.data() != null) {
+            final data = docSnapshot.data();
+            return TaskModel.fromMap(data!);
+          } else {
+            throw Exception(AppConstants.taskNotFound);
+          }
         });
   }
 }
