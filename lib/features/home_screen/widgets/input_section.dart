@@ -7,11 +7,13 @@ import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:checkit/common/widgets/reusable_textfields.dart';
 import 'package:checkit/common/widgets/segmented_button_widget.dart';
+import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
 
 class InputSection extends ConsumerStatefulWidget {
   final WidgetRef ref;
-  const InputSection({super.key, required this.ref});
+  final TaskModel? existingTask;
+  const InputSection({super.key, required this.ref, this.existingTask});
 
   @override
   ConsumerState<InputSection> createState() => _InputSectionState();
@@ -28,10 +30,30 @@ class _InputSectionState extends ConsumerState<InputSection> {
   @override
   void initState() {
     super.initState();
+
     taskNameController = TextEditingController();
     taskDescController = TextEditingController();
     taskDateController = TextEditingController();
     taskTimeController = TextEditingController();
+
+    // Safely update the provider after widget build is complete
+    Future.microtask(() {
+      if (widget.existingTask != null) {
+        final task = widget.existingTask!;
+        final notifier = widget.ref.read(homeScreenProvider.notifier);
+
+        notifier.setTitle(task.title);
+        notifier.setDesc(task.description);
+        notifier.setDate(task.date);
+        notifier.setTime(task.time);
+        notifier.setPriority(task.priority);
+
+        taskNameController.text = task.title;
+        taskDescController.text = task.description;
+        taskDateController.text = task.date;
+        taskTimeController.text = task.time;
+      }
+    });
   }
 
   @override

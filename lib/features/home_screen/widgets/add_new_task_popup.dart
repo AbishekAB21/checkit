@@ -1,5 +1,7 @@
+import 'package:checkit/common/providers/stream_provider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:uuid/uuid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
@@ -12,10 +14,13 @@ import 'package:checkit/features/home_screen/widgets/input_section.dart';
 import 'package:checkit/features/home_screen/core/models/task_db_model.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/home_screen/core/providers/home_screen_provider.dart';
-import 'package:uuid/uuid.dart';
 
 class AddNewTaskPopup {
-  void showBottomSheet(BuildContext context, WidgetRef ref) {
+  void showBottomSheet(
+    BuildContext context,
+    WidgetRef ref, {
+    TaskModel? taskToEdit,
+  }) {
     final color = ref.watch(themeProvider);
     showModalBottomSheet(
       context: context,
@@ -64,7 +69,9 @@ class AddNewTaskPopup {
                                     child: Text(AppConstants.cancel),
                                   ),
                                   Text(
-                                    AppConstants.newTask,
+                                    taskToEdit != null
+                                        ? AppConstants.editTask
+                                        : AppConstants.newTask,
                                     style: Fontstyles.roboto18px(context, ref),
                                   ),
                                   TextButton(
@@ -97,8 +104,9 @@ class AddNewTaskPopup {
                                         );
                                       }
 
-                                      final task = TaskModel(
-                                        taskId: Uuid().v4(),
+                                      final newTask = TaskModel(
+                                        taskId:
+                                            taskToEdit?.taskId ?? Uuid().v4(),
                                         title: taskState.title,
                                         description: taskState.desc,
                                         date: taskState.date,
@@ -107,14 +115,25 @@ class AddNewTaskPopup {
                                       );
 
                                       try {
-                                        await HomeDb().addTasksToDatabase(task);
+                                        if (taskToEdit == null) {
+                                          await HomeDb().addTasksToDatabase(
+                                            newTask,
+                                          );
+                                        } else {
+                                          await HomeDb().updateExistingTask(
+                                            newTask,
+                                          );
+                                        }
+
                                         ref
                                             .read(authLoadingProvider.notifier)
                                             .state = false;
                                         Navigator.pop(context);
                                         ShowCustomSnackbar().showSnackbar(
                                           context,
-                                          'Task Added!',
+                                          taskToEdit == null
+                                              ? AppConstants.taskAdded
+                                              : AppConstants.taskUpdated,
                                           color.successColor,
                                           ref,
                                         );
@@ -140,7 +159,10 @@ class AddNewTaskPopup {
                                 child: SingleChildScrollView(
                                   physics: BouncingScrollPhysics(),
                                   controller: scrollController,
-                                  child: InputSection(ref: ref),
+                                  child: InputSection(
+                                    ref: ref,
+                                    existingTask: taskToEdit,
+                                  ),
                                 ),
                               ),
                             ],

@@ -45,6 +45,7 @@ class AppConstants {
   static const String taskNotFound = 'Task not found';
   static const String somethingWentWrong = 'Something went wrong';
   static const String nothingToSeeHere = 'Nothing to see here'; 
-  
-  
+  static const String editTask = 'Edit Task';
+  static const String taskAdded = 'Task added!';
+  static const String taskUpdated = 'Task Updated!';
 }

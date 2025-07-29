@@ -1,3 +1,4 @@
+import 'package:checkit/features/home_screen/widgets/add_new_task_popup.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,8 +37,8 @@ class TaskDetailScreenComponent extends ConsumerWidget {
         actions: [
           // Edit Task
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.more_vert_rounded, color: color.iconColor),
+            onPressed: () => AddNewTaskPopup().showBottomSheet(context, ref,taskToEdit: task),
+            icon: Icon(Icons.edit_calendar_rounded, color: color.iconColor),
           ),
         ],
       ),

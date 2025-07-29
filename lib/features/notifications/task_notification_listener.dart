@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkit/common/methods/date_time_picker.dart';
+import 'package:checkit/common/providers/stream_provider.dart';
 import 'package:checkit/common/methods/notification_service.dart';
 import 'package:checkit/features/notifications/provider/schedule_provider.dart';
-import 'package:checkit/common/providers/stream_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TaskNotificationListener extends ConsumerWidget {
   const TaskNotificationListener({super.key});

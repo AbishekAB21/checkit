@@ -24,6 +24,20 @@ class HomeDb {
         .set(task.toMap());
   }
 
+  Future<void> updateExistingTask(TaskModel task) async {
+    final uid = _auth.currentUser?.uid;
+
+    if (uid == null) throw Exception(AppConstants.userNotLoggedIn);
+
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('tasks')
+        .doc(task.taskId)
+        .update(task.toMap());
+      
+  }
+
   Stream<List<TaskModel>> getDataFromDatabase() {
     final uid = _auth.currentUser?.uid;
 

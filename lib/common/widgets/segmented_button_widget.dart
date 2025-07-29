@@ -8,7 +8,12 @@ import 'package:checkit/features/home_screen/core/providers/home_screen_provider
 
 class SegmentedButtonWidget extends ConsumerWidget {
   final List<String> buttons;
-  const SegmentedButtonWidget({super.key, required this.buttons});
+  final String? existingPriority;
+  const SegmentedButtonWidget({
+    super.key,
+    required this.buttons,
+    this.existingPriority,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,6 +22,15 @@ class SegmentedButtonWidget extends ConsumerWidget {
 
     // HomeScreenProvider instance
     final taskState = ref.watch(homeScreenProvider);
+
+    // Override provider if data exists and taskstate is null
+    if (taskState.priority.isEmpty && existingPriority != null) {
+      Future.microtask(
+        () => ref
+            .read(homeScreenProvider.notifier)
+            .setPriority(existingPriority!),
+      );
+    }
 
     // For setting priority
     final selectedPriority = taskState.priority;
