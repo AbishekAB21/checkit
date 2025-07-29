@@ -129,9 +129,9 @@ class NotificationService {
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       );
     } catch (e) {
-      debugPrint("❌ Failed to schedule exact alarm: $e");
+      
       if (e.toString().contains('exact_alarms_not_permitted')) {
-        debugPrint("Redirecting to settings for exact alarm permission...");
+        
         await openExactAlarmSettings();
       }
     }

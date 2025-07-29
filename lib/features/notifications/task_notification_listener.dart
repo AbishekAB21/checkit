@@ -33,7 +33,7 @@ class TaskNotificationListener extends ConsumerWidget {
               scheduledDate: scheduledDateTime,
             );
             }catch(e){
-              debugPrint('❌ Failed to schedule notification for ${task.title}: $e');
+             //
             }
 
             // Track Schedule ID to avoid duplicate scheduling

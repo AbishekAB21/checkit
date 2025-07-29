@@ -46,4 +46,5 @@ class AppConstants {
   static const String somethingWentWrong = 'Something went wrong';
   static const String nothingToSeeHere = 'Nothing to see here'; 
   
+  
 }
