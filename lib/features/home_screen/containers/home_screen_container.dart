@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:checkit/features/notifications/task_notification_listener.dart';
 import 'package:checkit/features/home_screen/components/home_screen_component.dart';
 
 class HomeScreenContainer extends StatelessWidget {
@@ -7,6 +8,11 @@ class HomeScreenContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomeScreenComponent();
+    return Stack(
+      children: [
+        HomeScreenComponent(),
+        TaskNotificationListener(),
+      ],
+    );
   }
 }

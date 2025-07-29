@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/constants/app_constants.dart';
@@ -73,7 +74,7 @@ class DateTimePicker {
 
     if (pickedTime != null) {
       final timeNow = DateTime.now();
-       final selectedDateTime = DateTime(
+      final selectedDateTime = DateTime(
         pickedDate.year,
         pickedDate.month,
         pickedDate.day,
@@ -81,7 +82,8 @@ class DateTimePicker {
         pickedTime.minute,
       );
 
-          final isToday = pickedDate.year == timeNow.year &&
+      final isToday =
+          pickedDate.year == timeNow.year &&
           pickedDate.month == timeNow.month &&
           pickedDate.day == timeNow.day;
 
@@ -100,7 +102,7 @@ class DateTimePicker {
     }
   }
 
-    String monthName(int month) {
+  String monthName(int month) {
     const months = [
       "Jan",
       "Feb",
@@ -116,5 +118,10 @@ class DateTimePicker {
       "Dec",
     ];
     return months[month - 1];
+  }
+
+  DateTime parseTaskDateTime(String date, String time) {
+    final combined = "$date $time"; // e.g., "2025-07-30 9:30 AM"
+    return DateFormat("yyyy-MM-dd h:mm a").parse(combined);
   }
 }
