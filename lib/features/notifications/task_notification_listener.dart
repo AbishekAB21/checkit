@@ -32,6 +32,7 @@ class TaskNotificationListener extends ConsumerWidget {
               title: task.title,
               desc: task.description,
               scheduledDate: scheduledDateTime,
+              context: context
             );
             }catch(e){
              //

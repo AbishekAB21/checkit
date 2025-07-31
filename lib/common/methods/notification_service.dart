@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 
-import 'package:flutter/rendering.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
+import 'package:checkit/common/widgets/reusable_alert_dialog.dart';
 
 class NotificationService {
   static final _notifications = FlutterLocalNotificationsPlugin();
@@ -38,8 +42,10 @@ class NotificationService {
     // Initialize time zones (required for scheduling)
     tz.initializeTimeZones();
 
-    // Set local timezone explicitly to IST Asia/Kolkata - this is done because tz.local automatically gets set to UTC not IST
-    //tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
+    /* Set local timezone explicitly to whatever timezone the device is in - 
+    this is done because tz.local automatically gets set to UTC if not mentioned explicitly */
+    final String deviceTimeZone = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(deviceTimeZone));
 
     // Initialization settings for Android and iOS
     const AndroidInitializationSettings androidSettings =
@@ -85,6 +91,7 @@ class NotificationService {
         'Task Notifications', // Channel name (visible in system settings)
         description: 'Notifies about scheduled tasks',
         importance: Importance.max,
+        bypassDnd: true, // Bypases DND mode on android
       );
 
       await androidPlugin?.createNotificationChannel(channel);
@@ -97,6 +104,7 @@ class NotificationService {
     required String title,
     required String desc,
     required DateTime scheduledDate,
+    required BuildContext context,
   }) async {
     int notificationId = taskId.hashCode;
 
@@ -129,10 +137,25 @@ class NotificationService {
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       );
     } catch (e) {
-      
       if (e.toString().contains('exact_alarms_not_permitted')) {
-        
-        await openExactAlarmSettings();
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder:
+                (context) => ReusableAlertDialog(
+                  onPressedLeft: () => Navigator.pop(context),
+                  onPressedRight: () async {
+                    await openExactAlarmSettings();
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  onPressedLeftTitle: AppConstants.cancel,
+                  onPressedRightTitle: AppConstants.goToSettings,
+                  mainAlertDialogTitle: AppConstants.allowPermissions,
+                ),
+          );
+        }
       }
     }
   }

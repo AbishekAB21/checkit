@@ -48,4 +48,6 @@ class AppConstants {
   static const String editTask = 'Edit Task';
   static const String taskAdded = 'Task added!';
   static const String taskUpdated = 'Task Updated!';
+  static const allowPermissions = 'Enable alarm and notification permissions for checkIt';
+  static const goToSettings = 'Go to settings';
 }

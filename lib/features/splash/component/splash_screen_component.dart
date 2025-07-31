@@ -47,7 +47,7 @@ class _SplashScreenComponentState extends ConsumerState<SplashScreenComponent> {
         child: Material(
           borderRadius: BorderRadius.circular(10),
           elevation: 5,
-          child: Logo(height: 70, width: 70, iconSize: 40),
+          child: Logo(height: 70, width: 70, iconSize: 50),
         ),
       ),
     );

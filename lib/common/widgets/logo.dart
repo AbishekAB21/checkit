@@ -8,7 +8,12 @@ class Logo extends ConsumerWidget {
   final double width;
   final double height;
   final double iconSize;
-  const Logo({super.key, required this.height, required this.width, required this.iconSize});
+  const Logo({
+    super.key,
+    required this.height,
+    required this.width,
+    required this.iconSize,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +30,11 @@ class Logo extends ConsumerWidget {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(Icons.calendar_month, color: color.iconColor, size: iconSize),
+      child: Image.asset(
+        "assets/images/app_logo.png",
+        height: iconSize,
+        width: iconSize,
+      ),
     );
   }
 }
