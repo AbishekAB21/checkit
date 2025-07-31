@@ -9,7 +9,9 @@ import 'package:checkit/common/widgets/reusable_button.dart';
 import 'package:checkit/common/methods/date_time_picker.dart';
 import 'package:checkit/common/providers/stream_provider.dart';
 import 'package:checkit/common/widgets/reusable_snackbar.dart';
+import 'package:checkit/common/methods/notification_service.dart';
 import 'package:checkit/features/home_screen/widgets/add_new_task_popup.dart';
+import 'package:checkit/features/notifications/provider/schedule_provider.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
 import 'package:checkit/features/task_detail_screen/core/database/task_detail_db.dart';
 
@@ -29,12 +31,12 @@ class TaskDetailScreenComponent extends ConsumerWidget {
         isNotdone
             ? ref.watch(taskByIdProvider(taskId))
             : ref.watch(completedTaskByIdProvider(taskId));
-      
-  
 
     return taskAsyncValue.when(
       data: (task) {
-        final createdOnDateTime = DateTimePicker().formatCreatedOn(task.createdOn);
+        final createdOnDateTime = DateTimePicker().formatCreatedOn(
+          task.createdOn,
+        );
         final taskDate = DateTime.parse(task.date);
         final dateText =
             "${taskDate.day} ${DateTimePicker().monthName(taskDate.month)}";
@@ -155,18 +157,34 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                   visible: isNotdone,
                   child: ReusableButton(
                     buttonText: AppConstants.markAsDone,
-                    onpressed: () {
-                      // delete task from calendar - move to finished tasks section
+                    onpressed: () async {
+                      // delete task from calendar - move to finished tasks section and cancel notification
                       try {
-                        TaskDetailDb().moveToCompletedTasks(task.taskId);
-                        Navigator.pop(context);
-                      } catch (e) {
-                        ShowCustomSnackbar().showSnackbar(
-                          context,
-                          "${AppConstants.error}: $e",
-                          color.errorColor,
-                          ref,
+                        final scheduleID = ref.read(
+                          scheduledTaskIdsProvider.notifier,
                         );
+
+                        // Cancel notification
+                        await NotificationService().cancelNotification(taskId);
+
+                        // Remove TaskId from schduled notifications list
+                        scheduleID.state = {...scheduleID.state}
+                          ..remove(task.taskId);
+
+                        // Move to completed
+                        TaskDetailDb().moveToCompletedTasks(task.taskId);
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ShowCustomSnackbar().showSnackbar(
+                            context,
+                            "${AppConstants.error}: $e",
+                            color.errorColor,
+                            ref,
+                          );
+                        }
                       }
                     },
                   ),

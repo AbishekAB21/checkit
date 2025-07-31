@@ -159,6 +159,15 @@ class NotificationService {
       }
     }
   }
+
+   Future<void> cancelNotification(String taskId) async {
+    try {
+      final int id = taskId.hashCode;
+      await FlutterLocalNotificationsPlugin().cancel(id);
+    } catch (e) {
+      // print the error if any
+    }
+  }
 }
 
 Future<void> openExactAlarmSettings() async {
