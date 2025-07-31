@@ -58,4 +58,7 @@ class AppConstants {
   static const invalidOtp = 'Invalid OTP';
   static const version = 'Version 1.0';
   static const noPictureFound = 'No profile picture found';
+  static const taskDeleted = 'Task Deleted';
+  static const delete = 'Delete';
+  static const permaDeleteTask = 'This will permanently delete the selected task';
 }

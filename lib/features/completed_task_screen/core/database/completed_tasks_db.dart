@@ -26,7 +26,19 @@ class CompletedTasksDb {
         });
   }
 
-  // Clear completed
+  // delete specific completed task
+  Future<void> deleteTaskPermanently(String taskId) async {
+    final uid = _auth.currentUser?.uid;
+
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('completedTasks')
+        .doc(taskId)
+        .delete();
+  }
+
+  // delete all completed tasks
   Future<void> cleanCompletedTasks() async {
     final uid = _auth.currentUser?.uid;
 

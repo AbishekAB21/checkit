@@ -58,6 +58,43 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
                             ),
                           );
                         },
+                        onLongPress: () {
+                          showDialog(
+                            context: context,
+                            builder:
+                                (context) => ReusableAlertDialog(
+                                  onPressedLeft: () => Navigator.pop(context),
+                                  onPressedRight: () async {
+                                    try {
+                                      await CompletedTasksDb()
+                                          .deleteTaskPermanently(task.taskId);
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                        ShowCustomSnackbar().showSnackbar(
+                                          context,
+                                          AppConstants.taskDeleted,
+                                          color.successColor,
+                                          ref,
+                                        );
+                                      }
+                                    } catch (e) {
+                                      if (context.mounted) {
+                                        ShowCustomSnackbar().showSnackbar(
+                                          context,
+                                          AppConstants.somethingWentWrong,
+                                          color.errorColor,
+                                          ref,
+                                        );
+                                      }
+                                    }
+                                  },
+                                  onPressedLeftTitle: AppConstants.cancel,
+                                  onPressedRightTitle: AppConstants.delete,
+                                  mainAlertDialogTitle:
+                                      AppConstants.permaDeleteTask,
+                                ),
+                          );
+                        },
                         child: TaskWidget(priority: task.priority, task: task),
                       );
                     },
