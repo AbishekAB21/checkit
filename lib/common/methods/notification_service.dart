@@ -49,7 +49,7 @@ class NotificationService {
 
     // Initialization settings for Android and iOS
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_notification');
 
     const DarwinInitializationSettings iosSettings =
         DarwinInitializationSettings();
@@ -91,7 +91,7 @@ class NotificationService {
         'Task Notifications', // Channel name (visible in system settings)
         description: 'Notifies about scheduled tasks',
         importance: Importance.max,
-        bypassDnd: true, // Bypases DND mode on android
+        bypassDnd: true, // Bypases DND mode on android,
       );
 
       await androidPlugin?.createNotificationChannel(channel);
