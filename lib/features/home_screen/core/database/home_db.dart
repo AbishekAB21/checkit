@@ -74,4 +74,25 @@ class HomeDb {
           }
         });
   }
+
+    Stream<TaskModel> getCompletedTaskByIdStream(String taskId) {
+    final uid = _auth.currentUser?.uid;
+
+    if (uid == null) throw Exception(AppConstants.userNotLoggedIn);
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('completedTasks')
+        .doc(taskId)
+        .snapshots()
+        .map((docSnapshot) {
+          if (docSnapshot.exists && docSnapshot.data() != null) {
+            final data = docSnapshot.data();
+            return TaskModel.fromMap(data!);
+          } else {
+            throw Exception(AppConstants.taskNotFound);
+          }
+        });
+  }
 }

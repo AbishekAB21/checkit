@@ -8,6 +8,7 @@ class CompletedTasksDb {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
+  // get completd tasks
   Stream<List<TaskModel>> getCompletedTasksFromDatabase() {
     final uid = _auth.currentUser?.uid;
 
@@ -23,5 +24,20 @@ class CompletedTasksDb {
             return TaskModel.fromMap(doc.data());
           }).toList();
         });
+  }
+
+  // Clear completed
+  Future<void> cleanCompletedTasks() async {
+    final uid = _auth.currentUser?.uid;
+
+    final collectionRef = _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('completedTasks');
+    final querySnapshot = await collectionRef.get();
+
+    for (var task in querySnapshot.docs) {
+      await task.reference.delete();
+    }
   }
 }

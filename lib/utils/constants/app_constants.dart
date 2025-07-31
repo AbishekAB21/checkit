@@ -50,4 +50,7 @@ class AppConstants {
   static const String taskUpdated = 'Task Updated!';
   static const allowPermissions = 'Enable alarm and notification permissions for checkIt';
   static const goToSettings = 'Go to settings';
+  static const thisWillClearCompleted = 'This will clear all the completed tasks';
+  static const cannotClearTasks = 'Cannot clear tasks';
+  static const tasksCleared = 'Tasks cleared!';
 }

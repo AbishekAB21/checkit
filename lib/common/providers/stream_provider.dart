@@ -14,6 +14,10 @@ final taskByIdProvider = StreamProvider.family<TaskModel, String>((ref, taskId) 
   return HomeDb().getTaskByIdStream(taskId);
 });
 
+final completedTaskByIdProvider = StreamProvider.family<TaskModel, String>((ref, taskId) {
+  return HomeDb().getCompletedTaskByIdStream(taskId);
+});
+
 
 final completedTaskStreamProvider = StreamProvider<List<TaskModel>>((ref){
 

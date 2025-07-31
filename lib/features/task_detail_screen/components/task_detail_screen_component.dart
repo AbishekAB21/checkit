@@ -15,17 +15,20 @@ import 'package:checkit/features/task_detail_screen/core/database/task_detail_db
 
 class TaskDetailScreenComponent extends ConsumerWidget {
   final String taskId;
-  final bool? done;
+  final bool isNotdone;
   const TaskDetailScreenComponent({
     super.key,
     required this.taskId,
-    this.done = true,
+    required this.isNotdone,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
-    final taskAsyncValue = ref.watch(taskByIdProvider(taskId));
+    final taskAsyncValue = isNotdone
+    ? ref.watch(taskByIdProvider(taskId))
+    : ref.watch(completedTaskByIdProvider(taskId));
+
 
     // final taskDate = DateTime.parse(task.date);
     // final dateText =
@@ -48,14 +51,17 @@ class TaskDetailScreenComponent extends ConsumerWidget {
             ),
             actions: [
               // Edit Task
-              IconButton(
-                onPressed:
-                    () => AddNewTaskPopup().showBottomSheet(
-                      context,
-                      ref,
-                      taskToEdit: task,
-                    ),
-                icon: Icon(Icons.edit_calendar_rounded, color: color.iconColor),
+              Visibility(
+                visible: isNotdone,
+                child: IconButton(
+                  onPressed:
+                      () => AddNewTaskPopup().showBottomSheet(
+                        context,
+                        ref,
+                        taskToEdit: task,
+                      ),
+                  icon: Icon(Icons.edit_calendar_rounded, color: color.iconColor),
+                ),
               ),
             ],
           ),
@@ -136,7 +142,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
 
                 // Button
                 Visibility(
-                  visible: done ?? true,
+                  visible: isNotdone,
                   child: ReusableButton(
                     buttonText: AppConstants.markAsDone,
                     onpressed: () {
@@ -162,7 +168,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
       },
       error:
           (error, stackTrace) =>
-              Center(child: Text(AppConstants.somethingWentWrong)),
+              Center(child: Text("${AppConstants.somethingWentWrong} $error")),
       loading: () => LoadingWidget(),
     );
   }

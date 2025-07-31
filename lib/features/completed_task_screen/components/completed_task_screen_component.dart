@@ -4,10 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
 import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/loading_widget.dart';
+import 'package:checkit/common/widgets/reusable_snackbar.dart';
 import 'package:checkit/common/providers/stream_provider.dart';
+import 'package:checkit/common/widgets/reusable_alert_dialog.dart';
+import 'package:checkit/common/providers/loading_state_provider.dart';
 import 'package:checkit/features/home_screen/widgets/task_widget.dart';
 import 'package:checkit/common/taransitions/custom_page_fade_transition.dart';
 import 'package:checkit/features/settings_screen/core/providers/theme_provider.dart';
+import 'package:checkit/features/completed_task_screen/core/database/completed_tasks_db.dart';
 import 'package:checkit/features/task_detail_screen/containers/task_detail_screen_container.dart';
 
 class CompletedTaskScreenComponent extends ConsumerWidget {
@@ -49,7 +53,7 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
                             CustomFadeTransition(
                               route: TaskDetailScreenContainer(
                                 taskId: task.taskId,
-                                done: false,
+                                isNotdone: false,
                               ),
                             ),
                           );
@@ -80,6 +84,53 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: color.secondaryGradient1,
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder:
+                (context) => ReusableAlertDialog(
+                  onPressedLeft: () => Navigator.pop(context),
+                  onPressedRight: () async {
+                    ref.read(authLoadingProvider.notifier).state = true;
+                    showDialog(
+                      context: context,
+                      builder: (context) => LoadingWidget(),
+                    );
+                    try {
+                      await CompletedTasksDb().cleanCompletedTasks();
+                      ref.read(authLoadingProvider.notifier).state = false;
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        ShowCustomSnackbar().showSnackbar(
+                          context,
+                          AppConstants.tasksCleared,
+                          color.successColor,
+                          ref,
+                        );
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        ShowCustomSnackbar().showSnackbar(
+                          context,
+                          AppConstants.cannotClearTasks,
+                          color.errorColor,
+                          ref,
+                        );
+                      }
+                    }
+                  },
+                  onPressedLeftTitle: AppConstants.cancel,
+                  onPressedRightTitle: AppConstants.confirm,
+                  mainAlertDialogTitle: AppConstants.thisWillClearCompleted,
+                ),
+          );
+        },
+        child: Icon(Icons.cleaning_services_rounded),
       ),
     );
   }
