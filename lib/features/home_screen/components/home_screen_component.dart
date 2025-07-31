@@ -1,3 +1,4 @@
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
@@ -87,7 +88,7 @@ class HomeScreenComponent extends ConsumerWidget {
                   return Center(child: Column(
                     children: [
                       Icon(Icons.error, color: color.deleteColor,),
-                      Text('Something went wrong'),
+                      Text(AppConstants.somethingWentWrong),
                     ],
                   ));
                 },

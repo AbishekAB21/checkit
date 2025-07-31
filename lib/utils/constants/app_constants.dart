@@ -53,4 +53,5 @@ class AppConstants {
   static const thisWillClearCompleted = 'This will clear all the completed tasks';
   static const cannotClearTasks = 'Cannot clear tasks';
   static const tasksCleared = 'Tasks cleared!';
+  static const nothingToClear = 'Nothing to clear';
 }

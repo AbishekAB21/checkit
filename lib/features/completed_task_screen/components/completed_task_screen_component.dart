@@ -89,6 +89,18 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: color.secondaryGradient1,
         onPressed: () {
+          if (taskStream.hasValue && taskStream.value!.isEmpty) {
+            if (context.mounted) {
+              ShowCustomSnackbar().showSnackbar(
+                context,
+                AppConstants.nothingToClear,
+                color.warningColor,
+                ref,
+              );
+            }
+            return;
+          }
+
           showDialog(
             context: context,
             builder:
@@ -130,7 +142,7 @@ class CompletedTaskScreenComponent extends ConsumerWidget {
                 ),
           );
         },
-        child: Icon(Icons.cleaning_services_rounded),
+        child: Icon(Icons.cleaning_services_rounded, color: color.iconColor),
       ),
     );
   }

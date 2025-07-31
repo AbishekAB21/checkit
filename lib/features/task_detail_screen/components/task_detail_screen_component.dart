@@ -25,14 +25,10 @@ class TaskDetailScreenComponent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = ref.watch(themeProvider);
-    final taskAsyncValue = isNotdone
-    ? ref.watch(taskByIdProvider(taskId))
-    : ref.watch(completedTaskByIdProvider(taskId));
-
-
-    // final taskDate = DateTime.parse(task.date);
-    // final dateText =
-    //     "${taskDate.day} ${DateTimePicker().monthName(taskDate.month)}";
+    final taskAsyncValue =
+        isNotdone
+            ? ref.watch(taskByIdProvider(taskId))
+            : ref.watch(completedTaskByIdProvider(taskId));
 
     return taskAsyncValue.when(
       data: (task) {
@@ -60,7 +56,10 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                         ref,
                         taskToEdit: task,
                       ),
-                  icon: Icon(Icons.edit_calendar_rounded, color: color.iconColor),
+                  icon: Icon(
+                    Icons.edit_calendar_rounded,
+                    color: color.iconColor,
+                  ),
                 ),
               ),
             ],
