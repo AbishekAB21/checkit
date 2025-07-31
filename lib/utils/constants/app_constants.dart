@@ -54,4 +54,8 @@ class AppConstants {
   static const cannotClearTasks = 'Cannot clear tasks';
   static const tasksCleared = 'Tasks cleared!';
   static const nothingToClear = 'Nothing to clear';
+  static const user = 'User';
+  static const invalidOtp = 'Invalid OTP';
+  static const version = 'Version 1.0';
+  static const noPictureFound = 'No profile picture found';
 }

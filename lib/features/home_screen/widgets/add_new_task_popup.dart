@@ -33,7 +33,7 @@ class AddNewTaskPopup {
             maxChildSize: 0.9,
             minChildSize: 0.4,
 
-            builder: (contex, scrollController) {
+            builder: (context, scrollController) {
               final isLoading = ref.watch(authLoadingProvider);
               return Container(
                 width: MediaQuery.of(context).size.width,
@@ -111,6 +111,7 @@ class AddNewTaskPopup {
                                         date: taskState.date,
                                         time: taskState.time,
                                         priority: taskState.priority,
+                                        createdOn: DateTime.now().toString()
                                       );
 
                                       try {
@@ -127,23 +128,27 @@ class AddNewTaskPopup {
                                         ref
                                             .read(authLoadingProvider.notifier)
                                             .state = false;
-                                        Navigator.pop(context);
-                                        ShowCustomSnackbar().showSnackbar(
-                                          context,
-                                          taskToEdit == null
-                                              ? AppConstants.taskAdded
-                                              : AppConstants.taskUpdated,
-                                          color.successColor,
-                                          ref,
-                                        );
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                          ShowCustomSnackbar().showSnackbar(
+                                            context,
+                                            taskToEdit == null
+                                                ? AppConstants.taskAdded
+                                                : AppConstants.taskUpdated,
+                                            color.successColor,
+                                            ref,
+                                          );
+                                        }
                                       } catch (e) {
-                                        Navigator.pop(context);
-                                        ShowCustomSnackbar().showSnackbar(
-                                          context,
-                                          'Error: $e',
-                                          color.errorColor,
-                                          ref,
-                                        );
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                          ShowCustomSnackbar().showSnackbar(
+                                            context,
+                                            '${AppConstants.error}: $e',
+                                            color.errorColor,
+                                            ref,
+                                          );
+                                        }
                                       }
                                     },
                                     child: Text(AppConstants.done),

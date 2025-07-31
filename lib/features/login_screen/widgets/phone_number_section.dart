@@ -46,6 +46,7 @@ class PhoneNumberSection extends ConsumerWidget {
       // On changed
       onChanged: (phone) {
         
+        // ignore: unnecessary_null_comparison
         if(onPhoneNumberChanged != null){
 
           onPhoneNumberChanged(phone.completeNumber);

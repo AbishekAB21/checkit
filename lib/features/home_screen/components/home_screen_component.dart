@@ -1,4 +1,3 @@
-import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
@@ -6,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:checkit/utils/fontstyles/fontstyles.dart';
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:checkit/common/widgets/loading_widget.dart';
 import 'package:checkit/common/providers/stream_provider.dart';
 import 'package:checkit/features/home_screen/widgets/task_widget.dart';

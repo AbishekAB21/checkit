@@ -25,7 +25,7 @@ class WelcomeTextSection extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${AppConstants.hi}, ${name ?? "User"}",
+                "${AppConstants.hi}, ${name ?? AppConstants.user}",
                 style: Fontstyles.roboto25px(context, ref),
               ),
               GestureDetector(
@@ -45,7 +45,7 @@ class WelcomeTextSection extends ConsumerWidget {
                   clipBehavior: Clip.antiAlias, // Ensure corners are clipped
                   child: profilePicUrl.when(
                     data: (url) {
-                      if (url != null && url.isNotEmpty) {
+                      if ( url.isNotEmpty) {
                         return CachedNetworkImage(
                           imageUrl: url,
                           fit: BoxFit.cover,

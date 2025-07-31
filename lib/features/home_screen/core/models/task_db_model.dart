@@ -5,6 +5,7 @@ class TaskModel {
   final String date;
   final String time;
   final String priority;
+  final String createdOn;
 
   TaskModel({
     required this.taskId,
@@ -13,6 +14,7 @@ class TaskModel {
     required this.date,
     required this.time,
     required this.priority,
+    required this.createdOn
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class TaskModel {
       'date': date,
       'time': time,
       'priority': priority,
+      'createdOn' : createdOn
     };
   }
 
@@ -34,6 +37,7 @@ class TaskModel {
       date: map['date'] ?? '',
       time: map['time'] ?? '',
       priority: map['priority'] ?? 'Low',
+      createdOn: map['createdOn'] ?? '',
     );
   }
 }

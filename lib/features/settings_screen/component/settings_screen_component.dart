@@ -128,7 +128,7 @@ class SettingsScreenComponent extends ConsumerWidget {
 
             Center(
               child: Text(
-                "Version 1.0",
+                AppConstants.version,
                 style: Fontstyles.roboto15Hintpx(context, ref),
               ),
             ),

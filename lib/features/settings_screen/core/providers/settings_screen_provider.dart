@@ -18,7 +18,7 @@ final profilePicUrlProvider = FutureProvider<String>((ref) async {
   final url = doc.data()?['profilePic'];
 
   if (url == null || url is! String || url.isEmpty) {
-    throw Exception('No profile picture found');
+    throw Exception(AppConstants.noPictureFound);
   }
 
   return url;

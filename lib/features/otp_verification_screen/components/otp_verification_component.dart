@@ -110,27 +110,34 @@ class OtpVerificationComponent extends ConsumerWidget {
                                     );
 
                                     if (user != null) {
+                                      // ignore: unused_result
                                       ref.refresh(userNameProvider);
-                                      Navigator.of(context).pushReplacement(
-                                        CustomFadeTransition(
-                                          route: HomeScreenContainer(),
-                                        ),
-                                      );
+                                      if (context.mounted) {
+                                        Navigator.of(context).pushReplacement(
+                                          CustomFadeTransition(
+                                            route: HomeScreenContainer(),
+                                          ),
+                                        );
+                                      }
                                     } else {
+                                      if (context.mounted) {
+                                        ShowCustomSnackbar().showSnackbar(
+                                          context,
+                                          AppConstants.invalidOtp,
+                                          color.errorColor,
+                                          ref,
+                                        );
+                                      }
+                                    }
+                                  } catch (e) {
+                                    if (context.mounted) {
                                       ShowCustomSnackbar().showSnackbar(
                                         context,
-                                        "Invalid OTP",
+                                        "${AppConstants.error}: ${e.toString()}",
                                         color.errorColor,
                                         ref,
                                       );
                                     }
-                                  } catch (e) {
-                                    ShowCustomSnackbar().showSnackbar(
-                                      context,
-                                      "Error: ${e.toString()}",
-                                      color.errorColor,
-                                      ref,
-                                    );
                                   } finally {
                                     loading.state = false;
                                   }
@@ -142,10 +149,7 @@ class OtpVerificationComponent extends ConsumerWidget {
                 ),
               ),
             ),
-            if(loading)
-            Center(
-              child: LoadingWidget(),
-            )
+            if (loading) Center(child: LoadingWidget()),
           ],
         ),
       ),

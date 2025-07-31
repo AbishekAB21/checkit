@@ -10,7 +10,7 @@ class TaskDetailDb {
   // Delete task from tasks collection and move it to completed tasks collection
 
   Future<void> moveToCompletedTasks(String taskId) async {
-    final uid = FirebaseAuth.instance.currentUser?.uid;
+    final uid = _auth.currentUser?.uid;
 
     final taskDocRef = _firestore
         .collection('users')

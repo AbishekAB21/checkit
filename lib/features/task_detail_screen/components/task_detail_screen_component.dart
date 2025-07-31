@@ -29,9 +29,12 @@ class TaskDetailScreenComponent extends ConsumerWidget {
         isNotdone
             ? ref.watch(taskByIdProvider(taskId))
             : ref.watch(completedTaskByIdProvider(taskId));
+      
+  
 
     return taskAsyncValue.when(
       data: (task) {
+        final createdOnDateTime = DateTimePicker().formatCreatedOn(task.createdOn);
         final taskDate = DateTime.parse(task.date);
         final dateText =
             "${taskDate.day} ${DateTimePicker().monthName(taskDate.month)}";
@@ -98,7 +101,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
 
                 // Due date
                 Text(
-                  "${AppConstants.due}: $dateText",
+                  "${AppConstants.due}: $dateText at ${task.time}",
                   style: Fontstyles.roboto15px(context, ref),
                 ),
               ],
@@ -138,7 +141,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                         ),
                         SizedBox(height: 30),
                         Text(
-                          "${AppConstants.createdOn}: $dateText at ${task.time}",
+                          "${AppConstants.createdOn}: $createdOnDateTime",
                           style: Fontstyles.roboto15px(context, ref),
                         ),
                         SizedBox(height: 5),
@@ -160,7 +163,7 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                       } catch (e) {
                         ShowCustomSnackbar().showSnackbar(
                           context,
-                          "Error: $e",
+                          "${AppConstants.error}: $e",
                           color.errorColor,
                           ref,
                         );

@@ -124,4 +124,10 @@ class DateTimePicker {
     final combined = "$date $time"; // e.g., "2025-07-30 9:30 AM"
     return DateFormat("yyyy-MM-dd h:mm a").parse(combined);
   }
+
+  String formatCreatedOn(String createdOnString) {
+    final dateTime = DateTime.parse(createdOnString);
+    final formatter = DateFormat('d MMM \'at\' h:mm a');
+    return formatter.format(dateTime);
+  }
 }

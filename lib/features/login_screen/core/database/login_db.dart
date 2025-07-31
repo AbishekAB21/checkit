@@ -1,3 +1,4 @@
+import 'package:checkit/utils/constants/app_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -41,6 +42,7 @@ class LoginDb {
           }
         } catch (e) {
           // Optional: handle error
+          throw Exception(AppConstants.somethingWentWrong);
         }
       },
 
