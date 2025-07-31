@@ -64,12 +64,12 @@ class Fontstyles {
     );
   }
 
-  static TextStyle roboto16pxSemiBold(BuildContext context, WidgetRef ref) {
+  static TextStyle roboto16pxSemiBold(BuildContext context, WidgetRef ref, [bool isgrey = false]) {
     final color = ref.watch(themeProvider);
     return GoogleFonts.roboto(
       fontSize: 16,
       fontWeight: FontWeight.w600,
-      color: color.iconColor,
+      color: isgrey? color.textfieldBackground : color.iconColor,
     );
   }
 

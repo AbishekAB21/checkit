@@ -77,12 +77,20 @@ class TaskDetailScreenComponent extends ConsumerWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
-                    color: color.deleteColor,
+                    color:
+                        task.priority == 'High'
+                            ? color.deleteColor
+                            : task.priority == 'Medium'
+                            ? color.warningColor
+                            : color.iconColor,
                     borderRadius: BorderRadius.circular(40),
                   ),
                   child: Text(
                     task.priority,
-                    style: Fontstyles.roboto16pxSemiBold(context, ref),
+                    style:
+                        task.priority == 'Low'
+                            ? Fontstyles.roboto16pxSemiBold(context, ref, true)
+                            : Fontstyles.roboto16pxSemiBold(context, ref),
                   ),
                 ),
 
